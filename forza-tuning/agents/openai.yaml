@@ -1,0 +1,4 @@
+interface:
+  display_name: "Forza Tuning"
+  short_description: "Diagnose and refine Forza car tunes"
+  default_prompt: "Use $forza-tuning to diagnose this Forza tune and suggest the next testable setup changes."

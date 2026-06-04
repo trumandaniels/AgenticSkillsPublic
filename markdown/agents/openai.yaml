@@ -1,0 +1,4 @@
+interface:
+  display_name: "Markdown"
+  short_description: "Write polished Markdown and GitHub docs"
+  default_prompt: "Use $markdown to draft, revise, or troubleshoot a Markdown document."

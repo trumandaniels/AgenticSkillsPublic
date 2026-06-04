@@ -1,0 +1,4 @@
+interface:
+  display_name: "Animation"
+  short_description: "Frame-consistent image animation workflow"
+  default_prompt: "Use $animation to create consistent in-between frames from keyframes and motion reference."

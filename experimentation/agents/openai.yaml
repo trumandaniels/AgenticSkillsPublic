@@ -1,0 +1,4 @@
+interface:
+  display_name: "Experimentation"
+  short_description: "Autonomous code optimization loops"
+  default_prompt: "Use $experimentation to improve this project toward the target metric."

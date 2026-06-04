@@ -1,0 +1,4 @@
+interface:
+  display_name: "Entrepreneurship"
+  short_description: "Founder-tested SaaS decision support"
+  default_prompt: "Use $entrepreneurship to pressure-test this SaaS decision, ground it in founder-tested operator patterns when relevant, and recommend the highest-leverage next move."
