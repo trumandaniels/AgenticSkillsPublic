@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI / UX"
+  short_description: "Design and review polished product interfaces"
+  default_prompt: "Use $ui-ux to design, critique, or refine a polished product interface."

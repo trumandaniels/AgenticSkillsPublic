@@ -31,6 +31,9 @@ LIST_RE = re.compile(r"^(?:[-*+]|\d{1,3}[.)]|[A-Za-z][.)])\s+")
 ORDERED_RE = re.compile(r"^(\d{1,3})[.)]\s+(.*)$")
 WHITESPACE_RE = re.compile(r"[ \t]+")
 SENTENCE_END_RE = re.compile(r"[.!?:;,)\]]$")
+MARKUP_RE = re.compile(r"^</?[A-Za-z][\w:.-]*(?:\s+[^<>]*)?>$")
+ASSIGNMENT_DENSE_RE = re.compile(r"(?:\b[\w:.-]+\s*=\s*\"?[^\s>\"]+\"?\s*){2,}")
+NUMERIC_DATA_RE = re.compile(r"^[\d\s.+\-Ee]+$")
 
 
 def parse_args(argv: Sequence[str]) -> argparse.Namespace:
@@ -67,6 +70,8 @@ def normalize_line(line: str) -> str:
 def is_probable_heading(line: str) -> bool:
     if not line or LIST_RE.match(line):
         return False
+    if is_probable_code_or_data_line(line):
+        return False
     if len(line) > 96 or len(line.split()) > 14:
         return False
     if SENTENCE_END_RE.search(line):
@@ -82,6 +87,20 @@ def is_probable_heading(line: str) -> bool:
     if len(words) <= 4 and title_words == len(words):
         return True
     if len(words) <= 9 and title_words >= max(2, len(words) - 2):
+        return True
+    return False
+
+
+def is_probable_code_or_data_line(line: str) -> bool:
+    """Reject common literal examples before heading inference runs."""
+    stripped = line.strip()
+    if MARKUP_RE.match(stripped):
+        return True
+    if stripped.startswith(("<", "</")) or stripped.endswith((">", "/>")):
+        return True
+    if ASSIGNMENT_DENSE_RE.search(stripped):
+        return True
+    if NUMERIC_DATA_RE.match(stripped) and len(stripped.split()) >= 4:
         return True
     return False
 
@@ -127,15 +146,41 @@ def emit_paragraph(buffer: List[str], output: List[str], keep_line_breaks: bool)
     buffer.clear()
 
 
+def code_fence_language(lines: Sequence[str]) -> str:
+    if any(line.strip().startswith(("<", "</")) for line in lines):
+        return "xml"
+    return ""
+
+
+def emit_code_block(buffer: List[str], output: List[str]) -> None:
+    if not buffer:
+        return
+    language = code_fence_language(buffer)
+    output.append(f"```{language}")
+    output.extend(buffer)
+    output.append("```")
+    output.append("")
+    buffer.clear()
+
+
 def page_to_markdown(text: str, *, infer_headings: bool, keep_line_breaks: bool) -> List[str]:
     output: List[str] = []
     paragraph: List[str] = []
+    code_block: List[str] = []
 
     for raw_line in text.splitlines():
         line = normalize_line(raw_line)
         if not line:
+            emit_code_block(code_block, output)
             emit_paragraph(paragraph, output, keep_line_breaks)
             continue
+
+        if is_probable_code_or_data_line(line):
+            emit_paragraph(paragraph, output, keep_line_breaks)
+            code_block.append(line)
+            continue
+
+        emit_code_block(code_block, output)
 
         if infer_headings and is_probable_heading(line):
             emit_paragraph(paragraph, output, keep_line_breaks)
@@ -150,6 +195,7 @@ def page_to_markdown(text: str, *, infer_headings: bool, keep_line_breaks: bool)
 
         paragraph.append(line)
 
+    emit_code_block(code_block, output)
     emit_paragraph(paragraph, output, keep_line_breaks)
     return output
 
