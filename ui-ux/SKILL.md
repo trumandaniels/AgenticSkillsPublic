@@ -9,6 +9,16 @@ description: Design, critique, and refine user interfaces and product experience
 
 Use this skill to make product interfaces clear, useful, polished, and implementable. Treat UI and UX as a product-design problem first: understand the user's job, shape the workflow, then refine visual hierarchy, interaction, accessibility, and implementation details.
 
+## Reference Routing
+
+Load only the reference file needed for the task:
+
+- Read `references/product-design-workflows.md` when designing or critiquing complex products, editors, dashboards, workbenches, beta experiences, object models, layout families, golden workflows, or professional tool surfaces.
+- Read `references/perception-feedback-evaluation.md` when the UI must support iterative agent work, live preview, observability, trace review, evaluation loops, visual verification, or feedback-driven improvement.
+- Read `references/memory-and-context.md` when the product or agent needs persistent project context, design rationale, retrieval, long-horizon continuity, evidence-backed UX decisions, or source-grounded summaries.
+- Read `references/expert-testimonial-memory-map.md` when using expert interviews, testimonials, transcripts, talks, or design-leader advice as evidence; when synthesizing multiple experts; or when expert rules conflict and need context-specific decision rules.
+- Read `references/skill-optimization.md` when improving this skill itself, creating test prompts, evaluating design outputs, comparing variants, or deciding whether extra guidance earns its keep.
+
 ## Core Workflow
 
 1. Identify the product surface, user, primary job, platform, and constraints.
@@ -24,6 +34,7 @@ Use this skill to make product interfaces clear, useful, polished, and implement
 ## Design Guidance
 
 - Start from the user's intent, not from decorative layout. Name the decision or action the screen is helping with.
+- Choose the primary object model before choosing layout. Ask what the user is editing, inspecting, comparing, approving, or recovering.
 - Make the primary action obvious, secondary actions available, and dangerous actions deliberate.
 - Prefer direct manipulation and familiar controls: tabs for parallel views, menus for option sets, switches or checkboxes for binary choices, sliders or steppers for bounded numeric input, and icon buttons for compact tool actions.
 - Keep dense operational tools scannable. Use calm surfaces, predictable navigation, compact controls, stable table/grid layouts, and clear filters rather than marketing-style composition.
@@ -32,6 +43,7 @@ Use this skill to make product interfaces clear, useful, polished, and implement
 - Keep color functional. Use semantic color for status and risk; avoid one-note palettes dominated by a single hue family unless the product already requires it.
 - Make layout stable. Reserve dimensions for boards, toolbars, tiles, media, counters, buttons, and dynamic labels so hover states and data changes do not shift the interface.
 - Use motion to clarify continuity or feedback, not to distract. Respect reduced-motion preferences.
+- For editor-like software, prioritize object visibility, explicit selection scope, live preview, reversibility, and progressive movement from novice paths to expert accelerators.
 
 ## Review Checklist
 
@@ -73,6 +85,14 @@ For a design proposal, include:
 For a UI review, lead with findings ordered by severity. Reference exact screens, components, files, or line numbers when available, and include concrete fixes rather than vague taste preferences.
 
 For implementation work, summarize what changed, where it changed, and how it was visually or functionally verified.
+
+For complex product-design work, include:
+
+- `Object model`: the primary objects, persistent structures, and transient commands.
+- `Workflow spine`: the 3-5 golden workflows the interface must make excellent.
+- `Workspace model`: document-centric, canvas-centric, timeline-centric, workbench-centric, or hybrid.
+- `Feedback loops`: how users preview, commit, undo, inspect, evaluate, and recover.
+- `Evidence plan`: how usability, telemetry, screenshots, traces, or expert review will validate the design.
 
 ## Useful Prompts
 
