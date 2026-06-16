@@ -13,6 +13,11 @@ HEADINGIZED_CODE_RE = re.compile(
     r"^#{1,6}\s+(?:</?[A-Za-z][\w:.-]*\b|[\w:.-]+\s*=|[\"']?SELECT\b|[A-Z0-9_]+\s+WHERE\b)"
 )
 IMAGE_RE = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
+RAW_SIDEBAR_RE = re.compile(r"<<\s*(?:END\s+)?SIDE\s*BAR\s*>>|<<\s*SIDEBAR\b[^>]*>>", re.IGNORECASE)
+DECORATIVE_ARTIFACT_RE = re.compile(r"^(?:/square4\s*)+$", re.IGNORECASE)
+TOC_HEADING_RE = re.compile(r"^#{1,6}\s+(?:table of contents|contents)\s*$", re.IGNORECASE)
+HEADING_RE = re.compile(r"^#{1,6}\s+")
+TOC_DOT_LEADER_RE = re.compile(r"(?:\.{3,}|…{2,}).*\b\d{1,4}$")
 
 
 def parse_args() -> argparse.Namespace:
@@ -49,6 +54,24 @@ def audit(markdown_path: Path, root: Path, max_lookback: int) -> int:
     for index, line in enumerate(lines, start=1):
         if HEADINGIZED_CODE_RE.match(line):
             print(f"{markdown_path}:{index}: headingized-code: {line}")
+            issue_count += 1
+        if RAW_SIDEBAR_RE.search(line):
+            print(f"{markdown_path}:{index}: raw-sidebar-marker: {line}")
+            issue_count += 1
+        if DECORATIVE_ARTIFACT_RE.match(line.strip()):
+            print(f"{markdown_path}:{index}: decorative-artifact: {line}")
+            issue_count += 1
+
+    in_toc = False
+    for index, line in enumerate(lines, start=1):
+        stripped = line.strip()
+        if TOC_HEADING_RE.match(stripped):
+            in_toc = True
+            continue
+        if in_toc and HEADING_RE.match(stripped):
+            in_toc = False
+        if in_toc and TOC_DOT_LEADER_RE.search(stripped):
+            print(f"{markdown_path}:{index}: toc-dot-leader-page-number: {line}")
             issue_count += 1
 
     for index, line in enumerate(lines):

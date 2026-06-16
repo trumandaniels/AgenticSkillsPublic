@@ -15,6 +15,7 @@ Use this reference after the first PDF-to-Markdown extraction.
 - Mark missing figures with concise notes such as `[Figure omitted: caption text]` only when the source indicates the figure.
 - Around figures, remove OCR/text-layer label fragments that duplicate a captured snapshot and read out of order. Keep the figure snapshot and caption; recreate as Mermaid only when the relationships are unambiguous.
 - Convert explicit sidebar markers such as `<<SIDE BAR>>`, `<<SIDEBAR BEGIN>>`, and `<<END SIDE BAR>>` into Markdown blockquotes or callouts. Remove marker text and stray glyph artifacts such as `/square4` when they only represent decorative separators.
+- Rebuild table-of-contents entries as Markdown links. Remove printed page numbers and dot leaders from polished reading copies.
 
 ## Tables
 
@@ -27,6 +28,17 @@ Use a Markdown table only when:
 - Cell contents are short enough to stay readable.
 
 Otherwise, use a simple list or fenced text block and say the table needs manual review.
+
+## Table of Contents
+
+For polished Markdown, convert extracted TOC lines into links that target the corresponding section headings:
+
+```markdown
+- [Chapter Title](#chapter-title)
+- [Subsection Title](#subsection-title)
+```
+
+Do not keep print-layout dot leaders or trailing page numbers such as `Chapter Title ........ 42` unless the user asks for page traceability. If page traceability is required, place page references in a separate note or metadata field rather than mixing them into link text.
 
 ## Code, Markup, and Data Examples
 
@@ -81,4 +93,5 @@ Before delivering the Markdown file:
 - Search for `^#+\s*</`, `^#+\s*[\w.-]+=`, and long numeric lines promoted near headings; these usually indicate code/data blocks were misrendered.
 - Search figure-heavy chapters for nearby orphan labels, repeated captions, or headings made from diagram text.
 - Search for raw sidebar markers (`<<SIDE`, `SIDEBAR`) and decorative extraction artifacts (`/square4`) near sidebars.
+- Search TOC sections for dot leaders and trailing page numbers; these should usually become direct Markdown links.
 - Tell the user if images, charts, tables, forms, or scanned pages were not fully converted.

@@ -18,6 +18,7 @@ Load only the reference file needed for the task:
 - Read `references/memory-and-context.md` when the product or agent needs persistent project context, design rationale, retrieval, long-horizon continuity, evidence-backed UX decisions, or source-grounded summaries.
 - Read `references/expert-testimonial-memory-map.md` when using expert interviews, testimonials, transcripts, talks, or design-leader advice as evidence; when synthesizing multiple experts; or when expert rules conflict and need context-specific decision rules.
 - Read `references/skill-optimization.md` when improving this skill itself, creating test prompts, evaluating design outputs, comparing variants, or deciding whether extra guidance earns its keep.
+- Read `references/ui-audit-passes.md` when asked for auditable or testable UI/UX best practices, automated UI audits, package recommendations, accessibility/performance/visual regression testing, or optional audit passes before finalizing frontend work.
 
 ## Core Workflow
 
@@ -70,6 +71,7 @@ When critiquing or revising a UI, look for:
 - Add visible focus states and preserve keyboard interaction when restyling controls.
 - If using icons, use the project's existing icon library. Use `lucide` when available and no local icon system exists.
 - Validate with a real rendered view when practical. Check at least one desktop and one mobile viewport for frontend work with meaningful layout changes.
+- When frontend work can be run locally, offer optional audit passes from `references/ui-audit-passes.md` before finalizing. Ask before installing dependencies, starting long-running audits, creating screenshot baselines, or changing CI config.
 
 ## Output Patterns
 
@@ -85,6 +87,8 @@ For a design proposal, include:
 For a UI review, lead with findings ordered by severity. Reference exact screens, components, files, or line numbers when available, and include concrete fixes rather than vague taste preferences.
 
 For implementation work, summarize what changed, where it changed, and how it was visually or functionally verified.
+
+For audit-focused work, summarize which optional passes ran, which were skipped, any install or setup changes, and which findings need manual UX judgment.
 
 For complex product-design work, include:
 
