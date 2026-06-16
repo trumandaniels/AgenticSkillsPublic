@@ -1,0 +1,4 @@
+interface:
+  display_name: "Data Systems"
+  short_description: "Design data applications and systems"
+  default_prompt: "Use $data-systems to design a data application architecture with tradeoffs, assumptions, and validation checks."

@@ -1,0 +1,58 @@
+{
+  "decision_id": "session_offline_concurrency",
+  "purpose": "Choose session state and offline concurrency patterns for business transactions spanning requests.",
+  "required_context": [
+    "business transaction length",
+    "session data size",
+    "conflict likelihood",
+    "conflict cost",
+    "clustering/failover needs",
+    "sensitive data",
+    "pending vs committed data semantics"
+  ],
+  "ask_if_missing": [
+    "Can the business transaction fit inside one database transaction?",
+    "How painful is it for a user to lose/retry work after a conflict?",
+    "Must session state survive server failover?"
+  ],
+  "assume_if_low_risk": [
+    "optimistic offline locking as default for low-conflict business transactions",
+    "client state only for session IDs and tiny non-sensitive values"
+  ],
+  "branches": [
+    {
+      "criteria": "Business transaction is one request/system transaction",
+      "recommendation": "Use ordinary database transaction control; offline locks may be unnecessary."
+    },
+    {
+      "criteria": "Multi-request business transaction with rare conflicts",
+      "recommendation": "Use Optimistic Offline Lock with version checks and clear conflict messaging."
+    },
+    {
+      "criteria": "Conflicts are frequent or user work is expensive to discard",
+      "recommendation": "Use Pessimistic Offline Lock, possibly Coarse-Grained Lock for related object groups."
+    },
+    {
+      "criteria": "Need simple programming model and platform failover support",
+      "recommendation": "Use Server Session State with passivation/shared store as needed."
+    },
+    {
+      "criteria": "Need stateless servers and durable/pending session data",
+      "recommendation": "Use Database Session State with explicit pending-state cleanup and query isolation."
+    }
+  ],
+  "failure_modes": [
+    "database transaction held open across user think time",
+    "optimistic lock checks only changed rows and misses inconsistent reads",
+    "pessimistic locks are abandoned by dead sessions",
+    "client session data is trusted without validation",
+    "pending database session rows leak into committed-record queries"
+  ],
+  "output_checks": [
+    "state business vs system transaction boundary",
+    "state session-state location",
+    "state lock strategy",
+    "state stale/abandoned session cleanup",
+    "include conflict and failover tests"
+  ]
+}

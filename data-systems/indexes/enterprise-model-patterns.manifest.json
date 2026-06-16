@@ -1,0 +1,114 @@
+{
+  "source_id": "enterprise-model-patterns",
+  "title": "Enterprise Model Patterns: Describing the World, The UML Version",
+  "author": "David C. Hay",
+  "version_or_edition": "2011 first printing / 2012 second printing source extraction",
+  "source_path": "C:\\Users\\Truman\\Documents\\Programming\\AgenticKnowledge\\Experts\\Data\\enterprise-model-patterns.md",
+  "copyright_policy": "Use as user-provided source for compact doctrine, decision support, and anchored reference. Do not reproduce long passages.",
+  "anchors": [
+    {
+      "anchor_id": "emp_ch1_architect_view",
+      "chapter": 1,
+      "topic": "architect view and technology independence",
+      "line_start": 613,
+      "line_end": 735,
+      "pages": "34-40"
+    },
+    {
+      "anchor_id": "emp_ch2_conventions",
+      "chapter": 2,
+      "topic": "notation, aesthetic, and architectural conventions",
+      "line_start": 737,
+      "line_end": 1358,
+      "pages": "41-74"
+    },
+    {
+      "anchor_id": "emp_ch3_abstraction_levels",
+      "chapter": 3,
+      "topic": "levels 0-3 and adaptation approaches",
+      "line_start": 1362,
+      "line_end": 1428,
+      "pages": "75-79"
+    },
+    {
+      "anchor_id": "emp_ch4_party",
+      "chapter": 4,
+      "topic": "parties, relationships, identifiers, names, characteristics, roles",
+      "line_start": 1488,
+      "line_end": 1934,
+      "pages": "85-106"
+    },
+    {
+      "anchor_id": "emp_ch5_geography",
+      "chapter": 5,
+      "topic": "geographic locations, spatial relationships, names, identifiers, roles",
+      "line_start": 1948,
+      "line_end": 2300,
+      "pages": "107-128"
+    },
+    {
+      "anchor_id": "emp_ch6_assets",
+      "chapter": 6,
+      "topic": "assets, asset types/specifications, structures, characteristics, roles",
+      "line_start": 2322,
+      "line_end": 2730,
+      "pages": "129-152"
+    },
+    {
+      "anchor_id": "emp_ch7_activities",
+      "chapter": 7,
+      "topic": "activities, activity specifications, structures, events, roles",
+      "line_start": 2760,
+      "line_end": 3060,
+      "pages": "153-172"
+    },
+    {
+      "anchor_id": "emp_ch8_time",
+      "chapter": 8,
+      "topic": "time as attributes and time as entities",
+      "line_start": 3082,
+      "line_end": 3158,
+      "pages": "173-179"
+    },
+    {
+      "anchor_id": "emp_ch9_template",
+      "chapter": 9,
+      "topic": "Thing template, names, identifiers, characteristics, constraints, roles",
+      "line_start": 3198,
+      "line_end": 3598,
+      "pages": "183-205"
+    },
+    {
+      "anchor_id": "emp_ch10_information_resources",
+      "chapter": 10,
+      "topic": "information resources, concepts, distributions, dispositions",
+      "line_start": 3607,
+      "line_end": 3907,
+      "pages": "207-219"
+    },
+    {
+      "anchor_id": "emp_ch11_accounting",
+      "chapter": 11,
+      "topic": "accounts, cost centers, rollups, transactions, real-world links",
+      "line_start": 3913,
+      "line_end": 4340,
+      "pages": "221-236"
+    },
+    {
+      "anchor_id": "emp_part4_level2",
+      "chapter": "12-17",
+      "topic": "facilities, HR, communications, contracts, manufacturing, laboratory",
+      "line_start": 4350,
+      "line_end": 6160,
+      "pages": "241-355"
+    },
+    {
+      "anchor_id": "emp_part5_level3",
+      "chapter": "18-22",
+      "topic": "criminal justice, microbiology, banking, oil field production, highway maintenance",
+      "line_start": 6226,
+      "line_end": 7866,
+      "pages": "361-458"
+    }
+  ]
+}

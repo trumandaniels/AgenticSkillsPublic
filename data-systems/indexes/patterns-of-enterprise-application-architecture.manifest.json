@@ -1,0 +1,472 @@
+{
+  "source_id": "patterns-of-enterprise-application-architecture",
+  "title": "Patterns of Enterprise Application Architecture",
+  "author": "Martin Fowler, David Rice, Matthew Foemmel, Edward Hieatt, Robert Mee, Randy Stafford",
+  "version_or_edition": "Addison-Wesley 2002 source extraction",
+  "checksum": "4c92cea6687d01f5524e396b8259d72c69a474bfabba79a2a433eec7d76f3687",
+  "source_path": "C:\\Users\\Truman\\Documents\\Programming\\AgenticKnowledge\\Experts\\Data\\patterns-of-enterprise-application-architecture.md",
+  "copyright_policy": "User-provided local source. Use for compact doctrine, decision support, and anchored summaries only; do not reproduce long passages.",
+  "chunks": [
+    {
+      "anchor_id": "poeaa_front_matter_toc",
+      "heading_path": [
+        "Patterns of Enterprise Application Architecture",
+        "Table of Contents"
+      ],
+      "start_offset": 1,
+      "end_offset": 152,
+      "keywords": [
+        "pattern catalog",
+        "chapters",
+        "domain logic",
+        "data source",
+        "distribution",
+        "session state"
+      ],
+      "decision_nodes": [],
+      "claim_types": [
+        "source_metadata",
+        "catalog"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_preface_scope",
+      "heading_path": [
+        "Preface"
+      ],
+      "start_offset": 153,
+      "end_offset": 273,
+      "keywords": [
+        "enterprise applications",
+        "scope",
+        "layering",
+        "domain logic",
+        "relational database",
+        "session state"
+      ],
+      "decision_nodes": [
+        "enterprise_layering"
+      ],
+      "claim_types": [
+        "scope",
+        "doctrine"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_introduction_architecture",
+      "heading_path": [
+        "Introduction",
+        "Architecture",
+        "Enterprise Applications",
+        "Thinking About Performance"
+      ],
+      "start_offset": 275,
+      "end_offset": 455,
+      "keywords": [
+        "architecture",
+        "enterprise applications",
+        "performance",
+        "scalability",
+        "latency"
+      ],
+      "decision_nodes": [
+        "enterprise_layering",
+        "remote_boundary_pattern"
+      ],
+      "claim_types": [
+        "doctrine",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch1_layering",
+      "heading_path": [
+        "Part 1",
+        "Chapter 1",
+        "Layering"
+      ],
+      "start_offset": 476,
+      "end_offset": 608,
+      "keywords": [
+        "presentation",
+        "domain",
+        "data source",
+        "layer",
+        "tier",
+        "dependency"
+      ],
+      "decision_nodes": [
+        "enterprise_layering"
+      ],
+      "claim_types": [
+        "doctrine",
+        "checklist"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch2_domain_logic",
+      "heading_path": [
+        "Part 1",
+        "Chapter 2",
+        "Organizing Domain Logic"
+      ],
+      "start_offset": 609,
+      "end_offset": 704,
+      "keywords": [
+        "Transaction Script",
+        "Domain Model",
+        "Table Module",
+        "Service Layer"
+      ],
+      "decision_nodes": [
+        "domain_logic_pattern",
+        "enterprise_layering"
+      ],
+      "claim_types": [
+        "doctrine",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch3_relational_mapping",
+      "heading_path": [
+        "Part 1",
+        "Chapter 3",
+        "Mapping to Relational Databases"
+      ],
+      "start_offset": 704,
+      "end_offset": 996,
+      "keywords": [
+        "Gateway",
+        "Active Record",
+        "Data Mapper",
+        "Unit of Work",
+        "Identity Map",
+        "Lazy Load",
+        "Repository"
+      ],
+      "decision_nodes": [
+        "persistence_mapping_pattern"
+      ],
+      "claim_types": [
+        "doctrine",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch5_concurrency",
+      "heading_path": [
+        "Part 1",
+        "Chapter 5",
+        "Concurrency"
+      ],
+      "start_offset": 1071,
+      "end_offset": 1335,
+      "keywords": [
+        "lost update",
+        "inconsistent read",
+        "optimistic",
+        "pessimistic",
+        "business transaction",
+        "system transaction"
+      ],
+      "decision_nodes": [
+        "session_offline_concurrency",
+        "transaction_consistency"
+      ],
+      "claim_types": [
+        "doctrine",
+        "failure_mode"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch6_session_state",
+      "heading_path": [
+        "Part 1",
+        "Chapter 6",
+        "Session State"
+      ],
+      "start_offset": 1339,
+      "end_offset": 1422,
+      "keywords": [
+        "session state",
+        "statelessness",
+        "client session",
+        "server session",
+        "database session"
+      ],
+      "decision_nodes": [
+        "session_offline_concurrency"
+      ],
+      "claim_types": [
+        "doctrine",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch7_distribution",
+      "heading_path": [
+        "Part 1",
+        "Chapter 7",
+        "Distribution Strategies"
+      ],
+      "start_offset": 1423,
+      "end_offset": 1524,
+      "keywords": [
+        "distributed objects",
+        "remote interface",
+        "local interface",
+        "Remote Facade",
+        "DTO",
+        "clustering"
+      ],
+      "decision_nodes": [
+        "remote_boundary_pattern",
+        "enterprise_layering"
+      ],
+      "claim_types": [
+        "doctrine",
+        "failure_mode"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch8_putting_together",
+      "heading_path": [
+        "Part 1",
+        "Chapter 8",
+        "Putting It All Together"
+      ],
+      "start_offset": 1522,
+      "end_offset": 1752,
+      "keywords": [
+        "architecture choice",
+        "domain layer",
+        "data source layer",
+        "presentation layer",
+        "technology advice"
+      ],
+      "decision_nodes": [
+        "domain_logic_pattern",
+        "persistence_mapping_pattern",
+        "enterprise_layering"
+      ],
+      "claim_types": [
+        "doctrine",
+        "routing"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch9_domain_patterns",
+      "heading_path": [
+        "Part 2",
+        "Chapter 9",
+        "Domain Logic Patterns"
+      ],
+      "start_offset": 1778,
+      "end_offset": 2306,
+      "keywords": [
+        "Transaction Script",
+        "Domain Model",
+        "Table Module",
+        "Service Layer"
+      ],
+      "decision_nodes": [
+        "domain_logic_pattern"
+      ],
+      "claim_types": [
+        "pattern",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch10_data_source_patterns",
+      "heading_path": [
+        "Part 2",
+        "Chapter 10",
+        "Data Source Architectural Patterns"
+      ],
+      "start_offset": 2307,
+      "end_offset": 3000,
+      "keywords": [
+        "Table Data Gateway",
+        "Row Data Gateway",
+        "Active Record",
+        "Data Mapper"
+      ],
+      "decision_nodes": [
+        "persistence_mapping_pattern"
+      ],
+      "claim_types": [
+        "pattern",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch11_or_behavioral",
+      "heading_path": [
+        "Part 2",
+        "Chapter 11",
+        "Object-Relational Behavioral Patterns"
+      ],
+      "start_offset": 3001,
+      "end_offset": 3522,
+      "keywords": [
+        "Unit of Work",
+        "Identity Map",
+        "Lazy Load"
+      ],
+      "decision_nodes": [
+        "persistence_mapping_pattern",
+        "session_offline_concurrency"
+      ],
+      "claim_types": [
+        "pattern",
+        "failure_mode"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch12_or_structural",
+      "heading_path": [
+        "Part 2",
+        "Chapter 12",
+        "Object-Relational Structural Patterns"
+      ],
+      "start_offset": 3523,
+      "end_offset": 5326,
+      "keywords": [
+        "Identity Field",
+        "Foreign Key Mapping",
+        "Association Table Mapping",
+        "Dependent Mapping",
+        "Embedded Value",
+        "inheritance"
+      ],
+      "decision_nodes": [
+        "persistence_mapping_pattern"
+      ],
+      "claim_types": [
+        "pattern",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch13_metadata_repository",
+      "heading_path": [
+        "Part 2",
+        "Chapter 13",
+        "Object-Relational Metadata Mapping Patterns"
+      ],
+      "start_offset": 5327,
+      "end_offset": 5739,
+      "keywords": [
+        "Metadata Mapping",
+        "Query Object",
+        "Repository"
+      ],
+      "decision_nodes": [
+        "persistence_mapping_pattern"
+      ],
+      "claim_types": [
+        "pattern",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch15_distribution_patterns",
+      "heading_path": [
+        "Part 2",
+        "Chapter 15",
+        "Distribution Patterns"
+      ],
+      "start_offset": 6951,
+      "end_offset": 7410,
+      "keywords": [
+        "Remote Facade",
+        "Data Transfer Object",
+        "coarse grained",
+        "assembler"
+      ],
+      "decision_nodes": [
+        "remote_boundary_pattern"
+      ],
+      "claim_types": [
+        "pattern",
+        "failure_mode"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch16_offline_concurrency",
+      "heading_path": [
+        "Part 2",
+        "Chapter 16",
+        "Offline Concurrency Patterns"
+      ],
+      "start_offset": 7410,
+      "end_offset": 7973,
+      "keywords": [
+        "Optimistic Offline Lock",
+        "Pessimistic Offline Lock",
+        "Coarse-Grained Lock",
+        "Implicit Lock"
+      ],
+      "decision_nodes": [
+        "session_offline_concurrency",
+        "transaction_consistency"
+      ],
+      "claim_types": [
+        "pattern",
+        "failure_mode"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch17_session_state",
+      "heading_path": [
+        "Part 2",
+        "Chapter 17",
+        "Session State Patterns"
+      ],
+      "start_offset": 7974,
+      "end_offset": 8129,
+      "keywords": [
+        "Client Session State",
+        "Server Session State",
+        "Database Session State"
+      ],
+      "decision_nodes": [
+        "session_offline_concurrency"
+      ],
+      "claim_types": [
+        "pattern",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "poeaa_ch18_base_patterns",
+      "heading_path": [
+        "Part 2",
+        "Chapter 18",
+        "Base Patterns"
+      ],
+      "start_offset": 8130,
+      "end_offset": 9022,
+      "keywords": [
+        "Gateway",
+        "Mapper",
+        "Layer Supertype",
+        "Separated Interface",
+        "Registry",
+        "Value Object",
+        "Money",
+        "Service Stub"
+      ],
+      "decision_nodes": [
+        "enterprise_layering",
+        "persistence_mapping_pattern"
+      ],
+      "claim_types": [
+        "pattern",
+        "catalog"
+      ]
+    }
+  ]
+}

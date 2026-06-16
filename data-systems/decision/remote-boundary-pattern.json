@@ -1,0 +1,52 @@
+{
+  "decision_id": "remote_boundary_pattern",
+  "purpose": "Choose remote boundary strategy, Remote Facade/DTO usage, or local clustering/asynchronous alternatives.",
+  "required_context": [
+    "process boundaries",
+    "network latency",
+    "client ownership",
+    "interface granularity",
+    "serialization constraints",
+    "client data needs",
+    "synchronous vs asynchronous semantics"
+  ],
+  "ask_if_missing": [
+    "Is this boundary truly remote or only a logical layer?",
+    "Can the same process be clustered instead of splitting components?",
+    "What data does the client need for one interaction?"
+  ],
+  "assume_if_low_risk": [
+    "keep fine-grained domain objects in-process",
+    "use coarse-grained DTO-based calls only across real remote boundaries"
+  ],
+  "branches": [
+    {
+      "criteria": "No real process/network boundary",
+      "recommendation": "Use local fine-grained interfaces; avoid Remote Facade and DTO ceremony."
+    },
+    {
+      "criteria": "Remote access to fine-grained model is required",
+      "recommendation": "Use a thin Remote Facade plus Data Transfer Objects and assembler/mapping code."
+    },
+    {
+      "criteria": "Need scalability but no independent deployment boundary",
+      "recommendation": "Prefer clustering whole application nodes over distributing object classes."
+    },
+    {
+      "criteria": "Integration is naturally delayed, event-like, or responsiveness-oriented",
+      "recommendation": "Prefer asynchronous messaging/event integration over synchronous RPC."
+    }
+  ],
+  "failure_modes": [
+    "fine-grained remote interfaces create excessive calls",
+    "Remote Facade contains domain logic",
+    "DTOs mirror entire domain graph instead of client needs",
+    "binary serialization creates brittle client/server version lockstep"
+  ],
+  "output_checks": [
+    "state local vs remote boundary",
+    "state facade operation granularity",
+    "state DTO shape and versioning",
+    "state why asynchronous messaging is or is not appropriate"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "decision_id": "data_model_choice",
+  "purpose": "Choose the primary data modeling approach before selecting vendor products.",
+  "required_context": [
+    "core_entities",
+    "relationship_shape",
+    "query_patterns",
+    "write_patterns",
+    "transaction_boundaries",
+    "schema_volatility",
+    "audit_or_history_requirements"
+  ],
+  "ask_if_missing": [
+    "strict_transaction_boundaries",
+    "multi_entity_invariants",
+    "regulatory_audit_requirements",
+    "high_cardinality_relationship_queries"
+  ],
+  "assume_if_low_risk": [
+    "moderate_initial_scale",
+    "single_region_initial_deployment",
+    "schema_can_evolve_with_migrations"
+  ],
+  "branches": [
+    {
+      "use_when": "Many multi-entity invariants, joins, ad hoc filters, or reporting needs.",
+      "recommend": "Relational model as canonical store."
+    },
+    {
+      "use_when": "Aggregate documents are read/written together and internal shape changes often.",
+      "recommend": "Document model with clear aggregate boundaries."
+    },
+    {
+      "use_when": "Relationship traversal is the core product behavior.",
+      "recommend": "Graph model or graph projection derived from canonical records."
+    },
+    {
+      "use_when": "The product is fundamentally an append-only history of changes.",
+      "recommend": "Event model with projections for reads."
+    },
+    {
+      "use_when": "Similarity search or retrieval is central but facts require governance.",
+      "recommend": "Hybrid canonical store plus vector/search index, not vector-only truth."
+    }
+  ],
+  "failure_modes": [
+    "Choosing a document model despite cross-document invariants.",
+    "Using vector search as the source of truth.",
+    "Ignoring deletion and retention needs in event history.",
+    "Treating derived graph/search projections as canonical records without reconciliation."
+  ],
+  "output_checks": [
+    "Name canonical entities.",
+    "Name derived views and indexes.",
+    "State invariants and enforcement points.",
+    "Describe migration path if the model changes."
+  ]
+}

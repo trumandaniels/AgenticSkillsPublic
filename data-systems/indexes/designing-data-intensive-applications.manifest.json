@@ -1,0 +1,360 @@
+{
+  "source_id": "designing-data-intensive-applications",
+  "title": "Designing Data-Intensive Applications",
+  "author": "Martin Kleppmann",
+  "version_or_edition": "First edition source extraction",
+  "checksum": "7e565d435add0222674a8ff12c3c27c66a67b7eed8724a6c0e5239a256327a0a",
+  "source_path": "C:\\Users\\Truman\\Documents\\Programming\\AgenticKnowledge\\Experts\\Data\\designing-data-intensive-applications.md",
+  "copyright_policy": "User-provided local source. Use for compact doctrine, decision support, and anchored summaries only; do not reproduce long passages.",
+  "chunks": [
+    {
+      "anchor_id": "ddia_about_book",
+      "heading_path": [
+        "Designing Data-Intensive Applications",
+        "About this Book"
+      ],
+      "start_offset": 224,
+      "end_offset": 302,
+      "keywords": [
+        "data-intensive applications",
+        "reliability",
+        "scalability",
+        "maintainability"
+      ],
+      "decision_nodes": [],
+      "claim_types": [
+        "scope",
+        "source_metadata"
+      ]
+    },
+    {
+      "anchor_id": "ddia_ch1_foundations",
+      "heading_path": [
+        "Part I",
+        "Chapter 1",
+        "Reliable, Scalable, and Maintainable Applications"
+      ],
+      "start_offset": 335,
+      "end_offset": 641,
+      "keywords": [
+        "reliability",
+        "scalability",
+        "maintainability",
+        "load",
+        "latency",
+        "operability"
+      ],
+      "decision_nodes": [
+        "storage_selection",
+        "computation_mode"
+      ],
+      "claim_types": [
+        "doctrine",
+        "checklist"
+      ]
+    },
+    {
+      "anchor_id": "ddia_ch2_data_models",
+      "heading_path": [
+        "Part I",
+        "Chapter 2",
+        "Data Models and Query Languages"
+      ],
+      "start_offset": 660,
+      "end_offset": 1304,
+      "keywords": [
+        "relational",
+        "document",
+        "graph",
+        "normalization",
+        "query language"
+      ],
+      "decision_nodes": [
+        "data_model_choice"
+      ],
+      "claim_types": [
+        "doctrine",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "ddia_ch3_storage_retrieval",
+      "heading_path": [
+        "Part I",
+        "Chapter 3",
+        "Storage and Retrieval"
+      ],
+      "start_offset": 1326,
+      "end_offset": 1858,
+      "keywords": [
+        "index",
+        "b-tree",
+        "lsm",
+        "oltp",
+        "olap",
+        "columnar",
+        "materialized view"
+      ],
+      "decision_nodes": [
+        "storage_selection"
+      ],
+      "claim_types": [
+        "doctrine",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "ddia_ch4_encoding_evolution",
+      "heading_path": [
+        "Part I",
+        "Chapter 4",
+        "Encoding and Evolution"
+      ],
+      "start_offset": 1886,
+      "end_offset": 2366,
+      "keywords": [
+        "encoding",
+        "schema evolution",
+        "backward compatibility",
+        "forward compatibility",
+        "api",
+        "message"
+      ],
+      "decision_nodes": [
+        "schema_evolution_encoding"
+      ],
+      "claim_types": [
+        "doctrine",
+        "checklist"
+      ]
+    },
+    {
+      "anchor_id": "ddia_part2_distributed_intro",
+      "heading_path": [
+        "Part II",
+        "Distributed Data"
+      ],
+      "start_offset": 2386,
+      "end_offset": 2459,
+      "keywords": [
+        "distributed data",
+        "shared-nothing",
+        "replication",
+        "partitioning"
+      ],
+      "decision_nodes": [
+        "replication_strategy",
+        "partitioning_strategy"
+      ],
+      "claim_types": [
+        "scope",
+        "doctrine"
+      ]
+    },
+    {
+      "anchor_id": "ddia_ch5_replication",
+      "heading_path": [
+        "Part II",
+        "Chapter 5",
+        "Replication"
+      ],
+      "start_offset": 2465,
+      "end_offset": 3124,
+      "keywords": [
+        "single-leader",
+        "multi-leader",
+        "leaderless",
+        "replication lag",
+        "quorum",
+        "conflict"
+      ],
+      "decision_nodes": [
+        "replication_strategy"
+      ],
+      "claim_types": [
+        "doctrine",
+        "failure_mode"
+      ]
+    },
+    {
+      "anchor_id": "ddia_ch6_partitioning",
+      "heading_path": [
+        "Part II",
+        "Chapter 6",
+        "Partitioning"
+      ],
+      "start_offset": 3142,
+      "end_offset": 3356,
+      "keywords": [
+        "partitioning",
+        "sharding",
+        "hotspot",
+        "secondary index",
+        "rebalancing",
+        "routing"
+      ],
+      "decision_nodes": [
+        "partitioning_strategy"
+      ],
+      "claim_types": [
+        "doctrine",
+        "failure_mode"
+      ]
+    },
+    {
+      "anchor_id": "ddia_ch7_transactions",
+      "heading_path": [
+        "Part II",
+        "Chapter 7",
+        "Transactions"
+      ],
+      "start_offset": 3369,
+      "end_offset": 4109,
+      "keywords": [
+        "acid",
+        "isolation",
+        "snapshot isolation",
+        "serializability",
+        "write skew",
+        "phantom"
+      ],
+      "decision_nodes": [
+        "transaction_consistency"
+      ],
+      "claim_types": [
+        "doctrine",
+        "failure_mode"
+      ]
+    },
+    {
+      "anchor_id": "ddia_ch8_distributed_trouble",
+      "heading_path": [
+        "Part II",
+        "Chapter 8",
+        "The Trouble with Distributed Systems"
+      ],
+      "start_offset": 4117,
+      "end_offset": 4594,
+      "keywords": [
+        "partial failure",
+        "network",
+        "clock",
+        "timeout",
+        "process pause",
+        "fault tolerance"
+      ],
+      "decision_nodes": [
+        "replication_strategy",
+        "transaction_consistency"
+      ],
+      "claim_types": [
+        "doctrine",
+        "failure_mode"
+      ]
+    },
+    {
+      "anchor_id": "ddia_ch9_consistency_consensus",
+      "heading_path": [
+        "Part II",
+        "Chapter 9",
+        "Consistency and Consensus"
+      ],
+      "start_offset": 4623,
+      "end_offset": 5304,
+      "keywords": [
+        "linearizability",
+        "causality",
+        "consensus",
+        "leader election",
+        "total order broadcast",
+        "membership"
+      ],
+      "decision_nodes": [
+        "replication_strategy",
+        "transaction_consistency"
+      ],
+      "claim_types": [
+        "doctrine",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "ddia_part3_derived_data",
+      "heading_path": [
+        "Part III",
+        "Derived Data",
+        "Systems of Record and Derived Data"
+      ],
+      "start_offset": 5353,
+      "end_offset": 5371,
+      "keywords": [
+        "system of record",
+        "derived data",
+        "cache",
+        "index",
+        "materialized view"
+      ],
+      "decision_nodes": [
+        "derived_data_strategy"
+      ],
+      "claim_types": [
+        "definition",
+        "doctrine"
+      ]
+    },
+    {
+      "anchor_id": "ddia_ch10_batch_processing",
+      "heading_path": [
+        "Part III",
+        "Chapter 10",
+        "Batch Processing"
+      ],
+      "start_offset": 5373,
+      "end_offset": 5802,
+      "keywords": [
+        "batch",
+        "bounded input",
+        "mapreduce",
+        "dataflow",
+        "join",
+        "fault tolerance"
+      ],
+      "decision_nodes": [
+        "derived_data_strategy",
+        "computation_mode"
+      ],
+      "claim_types": [
+        "doctrine",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "ddia_ch11_stream_processing",
+      "heading_path": [
+        "Part III",
+        "Chapter 11",
+        "Stream Processing"
+      ],
+      "start_offset": 5833,
+      "end_offset": 6273,
+      "keywords": [
+        "stream",
+        "event",
+        "cdc",
+        "event sourcing",
+        "window",
+        "checkpoint",
+        "idempotence"
+      ],
+      "decision_nodes": [
+        "derived_data_strategy",
+        "schema_evolution_encoding",
+        "computation_mode"
+      ],
+      "claim_types": [
+        "doctrine",
+        "failure_mode"
+      ]
+    }
+  ]
+}

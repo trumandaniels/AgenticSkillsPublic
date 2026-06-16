@@ -1,0 +1,52 @@
+{
+  "decision_id": "domain_logic_pattern",
+  "purpose": "Choose Transaction Script, Domain Model, Table Module, Service Layer, or a mixed/refactoring path.",
+  "required_context": [
+    "domain rule complexity",
+    "rule volatility",
+    "duplication risk",
+    "team OO/modeling skill",
+    "database/schema fit",
+    "Record Set/tooling support",
+    "client/use-case count"
+  ],
+  "ask_if_missing": [
+    "Are the rules mostly CRUD/workflow, or do they have many interacting special cases?",
+    "Do platform tools revolve around tabular record sets?",
+    "Will more than one client/API invoke the same business operations?"
+  ],
+  "assume_if_low_risk": [
+    "start simple for CRUD-heavy apps",
+    "refactor Transaction Script toward Domain Model when duplication grows"
+  ],
+  "branches": [
+    {
+      "criteria": "Simple business logic, few special cases, fast delivery priority",
+      "recommendation": "Use Transaction Script with separated data-source access."
+    },
+    {
+      "criteria": "Complex or volatile business rules with duplication pressure",
+      "recommendation": "Use Domain Model and plan for Data Mapper or equivalent O/R mapping."
+    },
+    {
+      "criteria": "Record Set-centric platform/UI and table-shaped behavior",
+      "recommendation": "Use Table Module with Table Data Gateway."
+    },
+    {
+      "criteria": "Multiple clients or transaction/security/workflow coordination across resources",
+      "recommendation": "Add Service Layer; keep it thin over Domain Model where possible or use operation scripts for application coordination."
+    }
+  ],
+  "failure_modes": [
+    "Transaction Scripts accumulate duplicated conditional logic",
+    "Domain Model adds mapping complexity without enough domain complexity to repay it",
+    "Table Module is chosen without Record Set/tool support",
+    "Service Layer absorbs domain logic that belongs in reusable domain objects"
+  ],
+  "output_checks": [
+    "state chosen domain logic pattern",
+    "justify with complexity/tool/team forces",
+    "name persistence implications",
+    "name likely refactoring trigger"
+  ]
+}

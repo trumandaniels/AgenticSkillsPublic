@@ -1,0 +1,53 @@
+{
+  "decision_id": "schema_evolution_encoding",
+  "purpose": "Choose encoding and compatibility strategy for durable data, APIs, and events.",
+  "required_context": [
+    "readers and writers",
+    "deployment order",
+    "replay requirements",
+    "storage/traffic volume",
+    "schema governance",
+    "human inspection needs"
+  ],
+  "ask_if_missing": [
+    "Will old and new producers/consumers coexist?",
+    "Will historical messages or records be replayed?",
+    "Who owns compatibility checks?"
+  ],
+  "assume_if_low_risk": [
+    "backward and forward compatibility during rolling deployments",
+    "schema registry or contract tests for shared events/APIs"
+  ],
+  "branches": [
+    {
+      "criteria": "Public API or heterogeneous clients",
+      "recommendation": "Use explicit versioning, conservative additive changes, and compatibility tests; avoid runtime-specific encodings."
+    },
+    {
+      "criteria": "High-volume internal event stream",
+      "recommendation": "Use schema-driven binary encoding with compatibility checks and replay tests."
+    },
+    {
+      "criteria": "Low-volume operational integration where inspection matters",
+      "recommendation": "Use JSON or similar text encoding with documented schema, validation, and type conventions."
+    },
+    {
+      "criteria": "Breaking change is unavoidable",
+      "recommendation": "Create parallel topic/API/table or versioned envelope; migrate consumers before retiring old shape."
+    }
+  ],
+  "failure_modes": [
+    "old consumer crashes on new required field",
+    "new code cannot read historical records",
+    "unknown fields are discarded during round trip",
+    "numeric/date/binary ambiguity corrupts meaning",
+    "schema change breaks replay/backfill"
+  ],
+  "output_checks": [
+    "state encoding choice",
+    "state compatibility direction",
+    "state rollout order",
+    "state replay/backfill impact",
+    "include contract validation"
+  ]
+}

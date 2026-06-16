@@ -1,0 +1,59 @@
+{
+  "decision_id": "storage_selection",
+  "purpose": "Select storage components based on workload, ownership, query shape, and operational constraints.",
+  "required_context": [
+    "operational_vs_analytical_workload",
+    "latency_target",
+    "freshness_target",
+    "write_throughput",
+    "query_flexibility",
+    "retention",
+    "compliance_constraints",
+    "team_operations_capacity"
+  ],
+  "ask_if_missing": [
+    "hard_latency_slo",
+    "hard_freshness_slo",
+    "data_residency_or_privacy_constraint",
+    "must_support_ad_hoc_analytics"
+  ],
+  "assume_if_low_risk": [
+    "managed_services_preferred",
+    "avoid_unnecessary_polyglot_persistence",
+    "start_with_one_canonical_store_plus_derived_indexes"
+  ],
+  "branches": [
+    {
+      "use_when": "User-facing transactions and invariants dominate.",
+      "recommend": "OLTP database as canonical store."
+    },
+    {
+      "use_when": "Analytical scans, BI, and historical aggregation dominate.",
+      "recommend": "Warehouse or lakehouse as analytical store fed from canonical systems."
+    },
+    {
+      "use_when": "Durable event distribution and replay are central.",
+      "recommend": "Stream log with explicit schemas and consumer contracts."
+    },
+    {
+      "use_when": "Low-latency repeated reads tolerate staleness.",
+      "recommend": "Cache as derived state with invalidation and fallback strategy."
+    },
+    {
+      "use_when": "Text lookup, faceting, or similarity retrieval dominate reads.",
+      "recommend": "Search/vector index as derived retrieval surface with reconciliation."
+    }
+  ],
+  "failure_modes": [
+    "Adding a specialized store before proving the query shape needs it.",
+    "Letting derived stores accept writes that bypass canonical ownership.",
+    "Ignoring backfill, replay, and reconciliation for indexes.",
+    "Choosing a self-managed platform beyond team capacity."
+  ],
+  "output_checks": [
+    "Identify each store as canonical or derived.",
+    "Name propagation mechanism between stores.",
+    "Define freshness and reconciliation checks.",
+    "Include backup, restore, and retention implications."
+  ]
+}

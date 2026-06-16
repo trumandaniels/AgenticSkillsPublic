@@ -1,0 +1,58 @@
+{
+  "decision_id": "persistence_mapping_pattern",
+  "purpose": "Choose database access and object-relational mapping patterns for enterprise applications.",
+  "required_context": [
+    "domain logic pattern",
+    "schema ownership",
+    "object/table isomorphism",
+    "query complexity",
+    "legacy schema constraints",
+    "transaction/change tracking needs",
+    "tooling availability"
+  ],
+  "ask_if_missing": [
+    "Does the object model closely match the relational schema?",
+    "Who owns the database schema?",
+    "Do business transactions modify many related objects across requests?"
+  ],
+  "assume_if_low_risk": [
+    "separate SQL into gateways/mappers even for simple systems",
+    "buy/use existing O/R mapping tooling for rich Domain Model unless there is a strong reason not to"
+  ],
+  "branches": [
+    {
+      "criteria": "Transaction Script and simple SQL access",
+      "recommendation": "Use Table Data Gateway or Row Data Gateway to keep SQL out of scripts."
+    },
+    {
+      "criteria": "Table Module or Record Set-centric tooling",
+      "recommendation": "Use Table Data Gateway and let modules operate on record-set data."
+    },
+    {
+      "criteria": "Simple Domain Model matching tables",
+      "recommendation": "Use Active Record if coupling to the schema is acceptable."
+    },
+    {
+      "criteria": "Rich Domain Model, legacy schema, or independent model/schema evolution",
+      "recommendation": "Use Data Mapper with Unit of Work, Identity Map, and selective Lazy Load; consider O/R mapping tooling."
+    },
+    {
+      "criteria": "Many query shapes or multiple data sources behind a rich domain",
+      "recommendation": "Add Repository and Query Object over Data Mapper/Metadata Mapping."
+    }
+  ],
+  "failure_modes": [
+    "SQL is scattered through presentation/domain code",
+    "Active Record binds a rich domain model to a relational schema",
+    "Data Mapper is hand-built beyond team capacity",
+    "Lazy Load causes N+1/ripple-loading performance collapse",
+    "missing Identity Map creates two objects for one database row"
+  ],
+  "output_checks": [
+    "state primary persistence pattern",
+    "state change tracking strategy",
+    "state identity/caching strategy",
+    "state lazy/eager loading policy",
+    "include CRUD and concurrency tests"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "decision_id": "conceptual_modeling",
+  "purpose": "Decide how to approach a technology-independent conceptual enterprise data model.",
+  "source": "Enterprise Model Patterns",
+  "required_context": [
+    "business_problem",
+    "audience_viewpoint",
+    "current_artifacts",
+    "candidate_entities",
+    "business_language",
+    "stability_requirement",
+    "implementation_target"
+  ],
+  "ask_if_missing": [
+    "whether the user wants conceptual model or physical design",
+    "which business domain is being modeled",
+    "whether current forms/screens are authoritative or only clues",
+    "whether names, identifiers, and characteristics require history"
+  ],
+  "assume_if_low_risk": [
+    "architect_view_before_designer_view",
+    "technology_independent_model_first",
+    "use business vocabulary in outputs",
+    "treat patterns as starting points"
+  ],
+  "branches": [
+    {
+      "use_when": "The task is about stable business meaning, shared language, or cross-system integration.",
+      "recommend": "Build an architect-view conceptual model before choosing database/service structures."
+    },
+    {
+      "use_when": "The task centers on current forms, reports, screens, or legacy tables.",
+      "recommend": "Extract business facts from artifacts, then decide which artifacts are information resources versus implementation details."
+    },
+    {
+      "use_when": "The task has many variable attributes by entity type or source.",
+      "recommend": "Use characteristic/value patterns with legal values, units, sources, and effective dates."
+    },
+    {
+      "use_when": "The task includes customers, employees, vendors, owners, or managers.",
+      "recommend": "Model parties and roles/relationships rather than multiplying person-like entity classes."
+    },
+    {
+      "use_when": "The task includes cataloged products, services, procedures, materials, or equipment.",
+      "recommend": "Separate instances from types and specifications before modeling structure and characteristics."
+    }
+  ],
+  "failure_modes": [
+    "Modeling a current technology artifact as a fundamental business entity.",
+    "Skipping abstraction-level choice and mixing concept, logical, and physical concerns.",
+    "Using columns for every possible variable descriptor.",
+    "Conflating a party with a role the party plays.",
+    "Treating a report or document as canonical when it only queries other facts."
+  ],
+  "output_checks": [
+    "State the selected abstraction level.",
+    "Separate business concepts from technology artifacts.",
+    "Identify party, geography, asset, activity, time, information-resource, and accounting families when relevant.",
+    "State names/identifiers/characteristics/roles/relationships/time structures.",
+    "List business rules not enforceable by structure alone."
+  ]
+}

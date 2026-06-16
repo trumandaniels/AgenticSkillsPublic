@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Data Systems Source Manifest",
+  "type": "object",
+  "required": ["source_id", "title", "version_or_edition", "checksum", "chunks"],
+  "properties": {
+    "source_id": {"type": "string"},
+    "title": {"type": "string"},
+    "version_or_edition": {"type": "string"},
+    "checksum": {"type": "string"},
+    "source_path": {"type": "string"},
+    "chunks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["anchor_id", "heading_path", "start_offset", "end_offset", "keywords"],
+        "properties": {
+          "anchor_id": {"type": "string"},
+          "heading_path": {"type": "array", "items": {"type": "string"}},
+          "start_offset": {"type": "integer", "minimum": 0},
+          "end_offset": {"type": "integer", "minimum": 0},
+          "keywords": {"type": "array", "items": {"type": "string"}},
+          "decision_nodes": {"type": "array", "items": {"type": "string"}},
+          "claim_types": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

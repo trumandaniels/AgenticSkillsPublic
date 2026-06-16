@@ -1,0 +1,53 @@
+{
+  "decision_id": "enterprise_layering",
+  "purpose": "Choose enterprise application layers, service boundaries, and physical deployment boundaries.",
+  "required_context": [
+    "client types",
+    "business logic complexity",
+    "data source types",
+    "deployment topology",
+    "need for remote access",
+    "team/tool constraints",
+    "performance concern"
+  ],
+  "ask_if_missing": [
+    "Which clients must invoke the application: UI, batch, API, integration, or all of these?",
+    "Which boundaries are real process/network boundaries versus logical layers?",
+    "What business logic would be duplicated if a second presentation were added?"
+  ],
+  "assume_if_low_risk": [
+    "logical presentation/domain/data-source separation",
+    "single process unless a real deployment boundary is required"
+  ],
+  "branches": [
+    {
+      "criteria": "One UI, simple data edits, little workflow",
+      "recommendation": "Use light logical separation; avoid heavyweight service/distribution layers until another client or boundary appears."
+    },
+    {
+      "criteria": "Multiple clients or cross-resource use-case coordination",
+      "recommendation": "Add a Service Layer as the application boundary for transaction/security/workflow coordination."
+    },
+    {
+      "criteria": "Team proposes splitting domain classes across network nodes for scalability",
+      "recommendation": "Keep fine-grained objects local and scale by clustering the application process where possible."
+    },
+    {
+      "criteria": "Physical remote boundary is unavoidable",
+      "recommendation": "Design coarse-grained remote operations and DTOs at that boundary; keep internal domain objects fine-grained."
+    }
+  ],
+  "failure_modes": [
+    "domain logic leaks into presentation and is duplicated across clients",
+    "logical layers become unnecessary remote tiers",
+    "remote calls are hidden behind fine-grained interfaces",
+    "service layer becomes a dumping ground for all domain behavior"
+  ],
+  "output_checks": [
+    "name logical layers",
+    "name physical process boundaries",
+    "state whether Service Layer is needed",
+    "state remote-call granularity",
+    "include layer dependency rules"
+  ]
+}

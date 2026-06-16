@@ -1,0 +1,57 @@
+{
+  "decision_id": "computation_mode",
+  "purpose": "Choose how derived data is computed and refreshed.",
+  "required_context": [
+    "freshness_target",
+    "latency_target",
+    "source_update_frequency",
+    "compute_cost_sensitivity",
+    "backfill_frequency",
+    "consumer_tolerance_for_staleness",
+    "failure_recovery_requirements"
+  ],
+  "ask_if_missing": [
+    "whether_results_must_be_current_on_write",
+    "whether_late_or_duplicate_events_are_expected",
+    "whether_backfills_must_overlap_live_traffic"
+  ],
+  "assume_if_low_risk": [
+    "batch_is_acceptable_for_non_user_blocking_analytics",
+    "request_time_is_acceptable_for_simple_low_latency_derivations",
+    "derived_outputs_can_be_rebuilt_from_sources"
+  ],
+  "branches": [
+    {
+      "use_when": "The value is cheap to compute and must reflect the current request context.",
+      "recommend": "Request-time computation."
+    },
+    {
+      "use_when": "Freshness can lag and workloads are scan-heavy.",
+      "recommend": "Batch computation with explicit freshness checks."
+    },
+    {
+      "use_when": "Freshness matters and updates are continuous.",
+      "recommend": "Streaming computation with idempotent consumers and replay."
+    },
+    {
+      "use_when": "Operational reads need precomputed results.",
+      "recommend": "Materialized view or projection with invalidation/rebuild plan."
+    },
+    {
+      "use_when": "Source databases must feed downstream systems with low application coupling.",
+      "recommend": "CDC with schema/version governance and replay controls."
+    }
+  ],
+  "failure_modes": [
+    "Using streaming when batch freshness is sufficient.",
+    "Computing request-time values that create tail-latency spikes.",
+    "Missing idempotency and ordering assumptions.",
+    "Backfilling without reconciling with live writes."
+  ],
+  "output_checks": [
+    "State freshness target.",
+    "State recomputation and replay strategy.",
+    "Address late, duplicate, and out-of-order data.",
+    "Include monitoring for lag and correctness."
+  ]
+}

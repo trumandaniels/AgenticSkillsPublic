@@ -1,0 +1,54 @@
+{
+  "decision_id": "derived_data_strategy",
+  "purpose": "Choose and govern derived stores, batch/stream pipelines, CDC, event sourcing, and materialized views.",
+  "required_context": [
+    "canonical source",
+    "freshness requirement",
+    "rebuild/replay feasibility",
+    "query pattern",
+    "event order requirements",
+    "late data policy",
+    "failure tolerance"
+  ],
+  "ask_if_missing": [
+    "Which system is the source of record for each fact?",
+    "How stale may the derived view be?",
+    "Can the derived view be rebuilt from source within the recovery SLO?"
+  ],
+  "assume_if_low_risk": [
+    "derived state may lag but must be observable and rebuildable",
+    "batch for bounded backfills; stream/CDC for low-latency propagation"
+  ],
+  "branches": [
+    {
+      "criteria": "Freshness target is minutes to hours and backfill correctness matters",
+      "recommendation": "Use batch or microbatch with idempotent outputs, completion SLOs, and reconciliation."
+    },
+    {
+      "criteria": "Freshness target is seconds or continuous user-facing updates",
+      "recommendation": "Use stream processing or CDC with durable logs, checkpoints, lag metrics, and replay."
+    },
+    {
+      "criteria": "Search/cache/materialized view mirrors canonical data",
+      "recommendation": "Treat it as derived data with source-of-truth fallback, rebuild path, and stale/missing behavior."
+    },
+    {
+      "criteria": "Event history is itself the business record",
+      "recommendation": "Consider event sourcing only if versioned replay, audit, corrections, and snapshotting are first-class requirements."
+    }
+  ],
+  "failure_modes": [
+    "dual writes diverge source and derived store",
+    "pipeline drops, duplicates, or reorders events without idempotence",
+    "late events corrupt windowed results",
+    "derived store cannot be rebuilt within recovery objective",
+    "cache/search index silently becomes source of truth"
+  ],
+  "output_checks": [
+    "name source of record",
+    "state derivation mechanism",
+    "state freshness and lag checks",
+    "state rebuild/replay plan",
+    "include reconciliation probes"
+  ]
+}

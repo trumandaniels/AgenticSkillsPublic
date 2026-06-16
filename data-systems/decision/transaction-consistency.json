@@ -1,0 +1,53 @@
+{
+  "decision_id": "transaction_consistency",
+  "purpose": "Choose transaction boundaries, isolation level, and coordination strategy for invariants.",
+  "required_context": [
+    "business invariants",
+    "objects touched per write",
+    "concurrency level",
+    "acceptable anomalies",
+    "cross-service boundaries",
+    "retry/idempotency model"
+  ],
+  "ask_if_missing": [
+    "Which invariants must never be temporarily violated?",
+    "Can conflicting operations be retried or compensated?",
+    "Do writes cross databases, services, partitions, or regions?"
+  ],
+  "assume_if_low_risk": [
+    "serializable or database-enforced constraints for money, inventory, identity, and permissions",
+    "idempotent retry for externally triggered writes"
+  ],
+  "branches": [
+    {
+      "criteria": "Invariant spans multiple rows/documents and violation is unacceptable",
+      "recommendation": "Use database transactions with serializable isolation or explicit constraints/locks proven to prevent write skew and phantoms."
+    },
+    {
+      "criteria": "Invariant is local to one aggregate/document/key",
+      "recommendation": "Keep writes single-aggregate where possible and use optimistic concurrency or compare-and-set."
+    },
+    {
+      "criteria": "Workflow crosses services or datastores",
+      "recommendation": "Prefer outbox, saga, idempotency keys, and reconciliation; reserve distributed transactions for tightly controlled infrastructure."
+    },
+    {
+      "criteria": "Need globally unique decisions or automatic failover",
+      "recommendation": "Use a consensus-backed service/database for the decision point."
+    }
+  ],
+  "failure_modes": [
+    "lost update in read-modify-write flow",
+    "write skew under snapshot isolation",
+    "phantom rows invalidate a predicate decision",
+    "retry duplicates external side effects",
+    "two-phase commit blocks on failed coordinator"
+  ],
+  "output_checks": [
+    "name invariants",
+    "state isolation/coordination mechanism",
+    "state retry/idempotency behavior",
+    "name accepted anomalies if any",
+    "include concurrency tests"
+  ]
+}

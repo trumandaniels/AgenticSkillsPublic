@@ -1,0 +1,54 @@
+{
+  "decision_id": "partitioning_strategy",
+  "purpose": "Choose partition keys, index distribution, routing, and rebalancing approach.",
+  "required_context": [
+    "primary access patterns",
+    "range query needs",
+    "write distribution",
+    "tenant/key skew",
+    "secondary indexes",
+    "data size",
+    "rebalancing tolerance"
+  ],
+  "ask_if_missing": [
+    "Which queries must avoid scatter/gather?",
+    "Are writes monotonic by time, sequence, or tenant?",
+    "Which dimensions create hot keys or large tenants?"
+  ],
+  "assume_if_low_risk": [
+    "hash partitioning for high-write exact-key workloads",
+    "range partitioning only when range scans are central"
+  ],
+  "branches": [
+    {
+      "criteria": "Range scans and ordered reads are central",
+      "recommendation": "Use key-range partitioning with split policies, hot-range monitoring, and salting or compound keys for monotonic writes."
+    },
+    {
+      "criteria": "Exact-key reads/writes dominate and write load must spread evenly",
+      "recommendation": "Use hash partitioning; add separate derived/indexed paths for range or analytical queries."
+    },
+    {
+      "criteria": "Need both locality and write spreading",
+      "recommendation": "Use a compound key, often locality prefix plus hashed/distributed suffix, and validate query pruning."
+    },
+    {
+      "criteria": "Secondary-index queries must be low latency and targeted",
+      "recommendation": "Prefer global/term-partitioned indexes with async write/index maintenance and reconciliation."
+    }
+  ],
+  "failure_modes": [
+    "timestamp or sequence shard key creates a hot partition",
+    "large tenant dominates one shard",
+    "global secondary indexes become stale or write-amplified",
+    "scatter/gather queries overload all partitions",
+    "automatic rebalancing cascades under load"
+  ],
+  "output_checks": [
+    "state partition key",
+    "state skew/hotspot mitigation",
+    "state secondary-index strategy",
+    "state rebalancing/routing approach",
+    "include partition-level metrics"
+  ]
+}

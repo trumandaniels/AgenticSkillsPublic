@@ -1,0 +1,45 @@
+{
+  "version": "0.1.0",
+  "classes": {
+    "workflow": {
+      "store": "SKILL.md",
+      "promote_when": ["needed_on_most_uses", "procedural", "short"],
+      "requires_review": true
+    },
+    "doctrine": {
+      "store": "references/*.md",
+      "promote_when": ["stable", "reusable", "source_backed", "decision_relevant"],
+      "requires_review": true
+    },
+    "decision_node": {
+      "store": "decision/*.json",
+      "promote_when": ["recurring_branch", "high_downstream_impact", "clear_context_inputs"],
+      "requires_review": true
+    },
+    "source_chunk": {
+      "store": "indexes/* or external retrieval store",
+      "promote_when": ["immutable_source_evidence", "anchored", "checksum_available"],
+      "requires_review": false
+    },
+    "example": {
+      "store": "examples/*.jsonl",
+      "promote_when": ["compact", "tagged_assumptions", "demonstrates_pattern_or_failure"],
+      "requires_review": true
+    },
+    "eval_fixture": {
+      "store": "evals/*.jsonl",
+      "promote_when": ["tests_decision_quality", "has_expected_rubric", "non_duplicate"],
+      "requires_review": true
+    },
+    "candidate_memory": {
+      "store": "candidate-memory-inbox",
+      "promote_when": ["observed_in_use", "awaiting_triage"],
+      "requires_review": true
+    },
+    "omit": {
+      "store": "nowhere",
+      "promote_when": ["low_reuse", "unsupported", "stale", "misleading"],
+      "requires_review": false
+    }
+  }
+}

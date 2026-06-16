@@ -1,0 +1,55 @@
+{
+  "decision_id": "replication_strategy",
+  "purpose": "Choose replication topology and user-visible read/write guarantees.",
+  "required_context": [
+    "write regions",
+    "read regions",
+    "availability target",
+    "latency target",
+    "staleness tolerance",
+    "conflict tolerance",
+    "data loss tolerance during failover"
+  ],
+  "ask_if_missing": [
+    "Can users write the same logical records from multiple regions?",
+    "What stale-read behavior is acceptable after a write?",
+    "Is losing acknowledged writes during failover acceptable?"
+  ],
+  "assume_if_low_risk": [
+    "single write region",
+    "asynchronous read replicas",
+    "read-your-writes required only for the writer's session"
+  ],
+  "branches": [
+    {
+      "criteria": "Single write region and strong invariants on writes",
+      "recommendation": "Use single-leader replication or a consensus-backed database; document follower-read lag and failover behavior."
+    },
+    {
+      "criteria": "Multi-region writes are required and conflicts can be merged by domain logic",
+      "recommendation": "Use multi-leader or leaderless replication with explicit conflict detection, merge rules, tombstone retention, and reconciliation."
+    },
+    {
+      "criteria": "Low-latency reads dominate and stale reads are acceptable",
+      "recommendation": "Use asynchronous replicas or derived read stores; provide read-your-writes routing where needed."
+    },
+    {
+      "criteria": "Globally unique decisions or automatic failover must be correct under partitions",
+      "recommendation": "Use proven consensus-backed coordination rather than ad hoc leader election or locks."
+    }
+  ],
+  "failure_modes": [
+    "follower reads violate user expectations after writes",
+    "failover loses acknowledged async writes",
+    "split brain creates divergent leaders",
+    "conflict resolution overwrites valid concurrent updates",
+    "delete tombstones expire before lagging replicas observe them"
+  ],
+  "output_checks": [
+    "name topology",
+    "state read guarantees",
+    "state write durability guarantee",
+    "state conflict/failover behavior",
+    "include lag and replication-health metrics"
+  ]
+}

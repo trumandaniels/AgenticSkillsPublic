@@ -1,0 +1,66 @@
+{
+  "decision_id": "enterprise_pattern_selection",
+  "purpose": "Choose the Enterprise Model Patterns family and adaptation move for a domain model.",
+  "source": "Enterprise Model Patterns",
+  "required_context": [
+    "dominant_business_objects",
+    "domain_language",
+    "physical_vs_abstract_objects",
+    "events_and_activities",
+    "locations_or_facilities",
+    "contracts_or_accounts",
+    "documents_or_knowledge_assets",
+    "industry_specificity"
+  ],
+  "ask_if_missing": [
+    "whether the object is a party, role, asset, activity, location, document, or accounting effect",
+    "whether the model must support history of names, identifiers, or characteristics",
+    "whether a domain example is a generic pattern renamed or a genuinely specialized structure"
+  ],
+  "assume_if_low_risk": [
+    "start_with_Level_1_generic_enterprise_families",
+    "specialize_only_where_the_domain_requires_it",
+    "prefer roles_for_party_participation",
+    "prefer specifications_for_cataloged_assets_and_activities"
+  ],
+  "branches": [
+    {
+      "use_when": "The domain object is a person, organization, customer, employee, supplier, agency, or department.",
+      "recommend": "Use Party plus Party Type, Party Relationship, Party Role, names, identifiers, and characteristics."
+    },
+    {
+      "use_when": "The domain object is a place, region, route, boundary, point, or spatial area.",
+      "recommend": "Use Geographic Location; use Facility only when the place has operational purpose."
+    },
+    {
+      "use_when": "The domain object is a physical item, material, building, equipment, product, inventory, lot, or assembly.",
+      "recommend": "Use Asset, Asset Type, Asset Specification, structures, characteristics, and asset roles."
+    },
+    {
+      "use_when": "The domain object is work, service, procedure, task, test, production, communication, or workflow.",
+      "recommend": "Use Activity, Activity Type, Activity Specification, events/triggers, structures/dependencies, and activity roles."
+    },
+    {
+      "use_when": "The domain object is a governed document, message, image, report, software artifact, or knowledge object.",
+      "recommend": "Use Information Resource Definition/Instance, concepts/terms, distribution, roles, and disposition."
+    },
+    {
+      "use_when": "The domain object is financial recording, cost allocation, ledger impact, or account rollup.",
+      "recommend": "Use Account, Account Type, Cost Center, Rollup Scheme, and transaction assignment patterns."
+    }
+  ],
+  "failure_modes": [
+    "Using facility for pure geography or geography for an operational site.",
+    "Using customer/employee/vendor as fundamental entities instead of roles.",
+    "Mixing actual assets or activities with their specifications.",
+    "Forgetting effective dates and issuing authorities for names and identifiers.",
+    "Applying an industry pattern wholesale when only a small specialization is needed."
+  ],
+  "output_checks": [
+    "Name the selected pattern family.",
+    "State the adaptation move: rename, elaborate subtypes, modify concept, or add specialized detail.",
+    "Separate instances, types, and specifications.",
+    "Identify where characteristics and legal values are needed.",
+    "Identify roles and responsible parties."
+  ]
+}
