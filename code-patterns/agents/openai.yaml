@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Patterns"
+  short_description: "Code review, refactoring, and boundary tradeoffs"
+  default_prompt: "Use $code-patterns to review this code for maintainability, boundary risks, and the smallest useful refactor."
