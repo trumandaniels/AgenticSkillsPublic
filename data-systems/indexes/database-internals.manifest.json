@@ -1,0 +1,399 @@
+{
+  "source_id": "database-internals",
+  "title": "Database Internals: A Deep Dive into How Distributed Data Systems Work",
+  "author": "Alex Petrov",
+  "version_or_edition": "O'Reilly 2019 first edition source extraction",
+  "checksum": "b883cf2e9cde8743c4f5ebcef7e8537a42e0619906f525c104e6d1adf4cd24eb",
+  "source_path": "C:\\Users\\Truman\\Documents\\Programming\\AgenticKnowledge\\Experts\\Data\\Database Internals.md",
+  "copyright_policy": "User-provided local source. Use for compact doctrine, decision support, and anchored summaries only; do not reproduce long passages.",
+  "chunks": [
+    {
+      "anchor_id": "dbint_preface_scope",
+      "heading_path": [
+        "Preface",
+        "Scope",
+        "Structure"
+      ],
+      "start_offset": 57,
+      "end_offset": 171,
+      "keywords": [
+        "storage",
+        "distribution",
+        "internals",
+        "storage engine",
+        "distributed systems"
+      ],
+      "decision_nodes": [
+        "storage_engine_internals",
+        "distributed_coordination_internals"
+      ],
+      "claim_types": [
+        "scope",
+        "source_metadata"
+      ]
+    },
+    {
+      "anchor_id": "dbint_part1_overview",
+      "heading_path": [
+        "Part I",
+        "Introduction and Overview"
+      ],
+      "start_offset": 172,
+      "end_offset": 456,
+      "keywords": [
+        "row oriented",
+        "column oriented",
+        "memory",
+        "disk",
+        "data files",
+        "index files",
+        "buffering",
+        "immutability",
+        "ordering"
+      ],
+      "decision_nodes": [
+        "storage_engine_internals",
+        "storage_selection"
+      ],
+      "claim_types": [
+        "doctrine",
+        "taxonomy"
+      ]
+    },
+    {
+      "anchor_id": "dbint_btree_basics",
+      "heading_path": [
+        "B-Tree Basics"
+      ],
+      "start_offset": 457,
+      "end_offset": 704,
+      "keywords": [
+        "B-Tree",
+        "B+Tree",
+        "disk storage",
+        "node splits",
+        "node merges",
+        "separator keys"
+      ],
+      "decision_nodes": [
+        "storage_engine_internals",
+        "relational_physical_design"
+      ],
+      "claim_types": [
+        "doctrine",
+        "data_structure"
+      ]
+    },
+    {
+      "anchor_id": "dbint_file_formats",
+      "heading_path": [
+        "File Formats"
+      ],
+      "start_offset": 705,
+      "end_offset": 978,
+      "keywords": [
+        "binary encoding",
+        "page structure",
+        "slotted pages",
+        "cell layout",
+        "variable-size data",
+        "versioning",
+        "checksumming"
+      ],
+      "decision_nodes": [
+        "storage_engine_internals"
+      ],
+      "claim_types": [
+        "implementation",
+        "doctrine"
+      ]
+    },
+    {
+      "anchor_id": "dbint_btree_implementation",
+      "heading_path": [
+        "Implementing B-Trees"
+      ],
+      "start_offset": 979,
+      "end_offset": 1192,
+      "keywords": [
+        "page header",
+        "sibling links",
+        "overflow pages",
+        "binary search",
+        "bulk loading",
+        "compression",
+        "vacuum",
+        "fragmentation"
+      ],
+      "decision_nodes": [
+        "storage_engine_internals",
+        "relational_physical_design"
+      ],
+      "claim_types": [
+        "implementation",
+        "maintenance"
+      ]
+    },
+    {
+      "anchor_id": "dbint_transaction_recovery",
+      "heading_path": [
+        "Transaction Processing and Recovery"
+      ],
+      "start_offset": 1193,
+      "end_offset": 1621,
+      "keywords": [
+        "ACID",
+        "buffer management",
+        "WAL",
+        "ARIES",
+        "serializability",
+        "isolation",
+        "MVCC",
+        "locks",
+        "latches",
+        "deadlocks"
+      ],
+      "decision_nodes": [
+        "storage_engine_internals",
+        "transaction_consistency"
+      ],
+      "claim_types": [
+        "doctrine",
+        "constraints",
+        "recovery"
+      ]
+    },
+    {
+      "anchor_id": "dbint_btree_variants",
+      "heading_path": [
+        "B-Tree Variants"
+      ],
+      "start_offset": 1622,
+      "end_offset": 1877,
+      "keywords": [
+        "copy-on-write",
+        "LMDB",
+        "WiredTiger",
+        "lazy B-Tree",
+        "FD-Tree",
+        "Bw-Tree",
+        "cache-oblivious"
+      ],
+      "decision_nodes": [
+        "storage_engine_internals"
+      ],
+      "claim_types": [
+        "data_structure",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "dbint_lsm",
+      "heading_path": [
+        "Log-Structured Storage"
+      ],
+      "start_offset": 1878,
+      "end_offset": 2364,
+      "keywords": [
+        "LSM",
+        "SSTable",
+        "memtable",
+        "compaction",
+        "tombstones",
+        "Bloom filters",
+        "read amplification",
+        "write amplification",
+        "space amplification"
+      ],
+      "decision_nodes": [
+        "storage_engine_internals",
+        "derived_data_strategy"
+      ],
+      "claim_types": [
+        "doctrine",
+        "tradeoff",
+        "maintenance"
+      ]
+    },
+    {
+      "anchor_id": "dbint_distributed_overview",
+      "heading_path": [
+        "Part II",
+        "Distributed Systems",
+        "Introduction and Overview"
+      ],
+      "start_offset": 2381,
+      "end_offset": 2714,
+      "keywords": [
+        "distributed systems",
+        "partial failures",
+        "clocks",
+        "failure models",
+        "synchrony",
+        "delivery semantics",
+        "Two Generals",
+        "FLP"
+      ],
+      "decision_nodes": [
+        "distributed_coordination_internals",
+        "replication_strategy"
+      ],
+      "claim_types": [
+        "doctrine",
+        "failure_model"
+      ]
+    },
+    {
+      "anchor_id": "dbint_failure_leader",
+      "heading_path": [
+        "Failure Detection",
+        "Leader Election"
+      ],
+      "start_offset": 2715,
+      "end_offset": 2979,
+      "keywords": [
+        "heartbeats",
+        "failure detector",
+        "phi accrual",
+        "gossip",
+        "leader election",
+        "bully",
+        "ring",
+        "failover"
+      ],
+      "decision_nodes": [
+        "distributed_coordination_internals",
+        "replication_strategy"
+      ],
+      "claim_types": [
+        "algorithm",
+        "operations"
+      ]
+    },
+    {
+      "anchor_id": "dbint_replication_consistency",
+      "heading_path": [
+        "Replication and Consistency"
+      ],
+      "start_offset": 2980,
+      "end_offset": 3381,
+      "keywords": [
+        "availability",
+        "CAP",
+        "linearizability",
+        "causal consistency",
+        "session models",
+        "eventual consistency",
+        "quorums",
+        "CRDT"
+      ],
+      "decision_nodes": [
+        "distributed_coordination_internals",
+        "replication_strategy",
+        "transaction_consistency"
+      ],
+      "claim_types": [
+        "doctrine",
+        "consistency"
+      ]
+    },
+    {
+      "anchor_id": "dbint_anti_entropy",
+      "heading_path": [
+        "Anti-Entropy and Dissemination"
+      ],
+      "start_offset": 3382,
+      "end_offset": 3538,
+      "keywords": [
+        "read repair",
+        "digest reads",
+        "hinted handoff",
+        "Merkle trees",
+        "version vectors",
+        "gossip",
+        "partial views"
+      ],
+      "decision_nodes": [
+        "distributed_coordination_internals",
+        "replication_strategy"
+      ],
+      "claim_types": [
+        "algorithm",
+        "repair"
+      ]
+    },
+    {
+      "anchor_id": "dbint_distributed_transactions",
+      "heading_path": [
+        "Distributed Transactions"
+      ],
+      "start_offset": 3539,
+      "end_offset": 3806,
+      "keywords": [
+        "atomic operations",
+        "2PC",
+        "3PC",
+        "Calvin",
+        "Spanner",
+        "Percolator",
+        "consistent hashing",
+        "coordination avoidance"
+      ],
+      "decision_nodes": [
+        "distributed_coordination_internals",
+        "transaction_consistency",
+        "partitioning_strategy"
+      ],
+      "claim_types": [
+        "algorithm",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "dbint_consensus",
+      "heading_path": [
+        "Consensus"
+      ],
+      "start_offset": 3807,
+      "end_offset": 4263,
+      "keywords": [
+        "broadcast",
+        "atomic broadcast",
+        "Paxos",
+        "Multi-Paxos",
+        "Fast Paxos",
+        "EPaxos",
+        "Raft",
+        "Byzantine consensus"
+      ],
+      "decision_nodes": [
+        "distributed_coordination_internals",
+        "replication_strategy"
+      ],
+      "claim_types": [
+        "algorithm",
+        "consensus"
+      ]
+    },
+    {
+      "anchor_id": "dbint_bibliography_index",
+      "heading_path": [
+        "Part II Conclusion",
+        "Bibliography",
+        "Index"
+      ],
+      "start_offset": 4264,
+      "end_offset": 8234,
+      "keywords": [
+        "bibliography",
+        "further reading",
+        "index"
+      ],
+      "decision_nodes": [],
+      "claim_types": [
+        "definition_support",
+        "source_metadata"
+      ]
+    }
+  ]
+}

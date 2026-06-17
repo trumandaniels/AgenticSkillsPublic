@@ -17,10 +17,20 @@ Each decision file should use:
 
 ## Starter Routing
 
+- Use `decision/source-boundary-routing.json` when multiple source doctrines apply, conflict, or the right abstraction layer is unclear.
 - Use `decision/conceptual-modeling.json` when the request is about conceptual enterprise data modeling, abstraction level, business semantics, or architect-view models.
+- Use `decision/metadata-architecture-map.json` when scoping a metadata repository, metamodel, or architecture-framework row/column coverage.
+- Use `decision/business-glossary-fact-model.json` when deciding how to model business terms, concepts, semantic communities, ontologies, propositions, fact types, entity classes, attributes, domains, or stewardship.
+- Use `decision/business-rule-data-quality.json` when tracing business policies/rules into data constraints, derivations, database/program enforcement, data-quality measurements, or governance evidence.
 - Use `decision/enterprise-pattern-selection.json` when selecting Party, Geographic Location, Asset, Activity, Information Resource, Accounting, or domain adaptation patterns.
 - Use `decision/data-model-choice.json` when selecting relational, document, graph, event, vector, columnar, or hybrid modeling.
+- Use `decision/relational-database-design-workflow.json` when moving from requirements analysis into ERD/table/field design, construction, implementation, or tuning feedback.
+- Use `decision/normalization-depth.json` when deciding how far to normalize, when to stop at 3NF, or when to denormalize for usability/performance.
+- Use `decision/dimensional-modeling.json` when designing facts, dimensions, star/snowflake schemas, warehouse grain, retention, or OLTP/warehouse separation.
+- Use `decision/relational-physical-design.json` when choosing keys, foreign-key indexes, alternate indexes, datatypes, views, materialized views, partitioning, clustering, or physical/hardware-aware structures.
 - Use `decision/storage-selection.json` when selecting operational stores, analytical stores, streams, object stores, indexes, or caches.
+- Use `decision/storage-engine-internals.json` when choosing or diagnosing storage-engine layout, B-Tree vs LSM behavior, buffering, WAL/recovery, compaction, or read/write/space amplification.
+- Use `decision/distributed-coordination-internals.json` when choosing or diagnosing failure detection, leader election, delivery semantics, consistency models, anti-entropy, distributed commit, or consensus behavior.
 - Use `decision/computation-mode.json` when deciding request-time, batch, streaming, materialized view, CDC, or hybrid processing.
 - Use `decision/enterprise-layering.json` when choosing presentation/domain/data-source boundaries, service layer placement, and local vs remote layer deployment.
 - Use `decision/domain-logic-pattern.json` when choosing Transaction Script, Domain Model, Table Module, Service Layer, or a refactoring path between them.

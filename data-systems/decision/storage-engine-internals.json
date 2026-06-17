@@ -1,0 +1,67 @@
+{
+  "decision_id": "storage_engine_internals",
+  "purpose": "Choose or diagnose storage-engine layout and access-method behavior: row/column, memory/disk, B-Tree, LSM, buffering, WAL, compaction, and amplification.",
+  "required_context": [
+    "primary access patterns: point lookup, range scan, append, update, delete, aggregation",
+    "read/write ratio and latency targets",
+    "data size and working-set/cache fit",
+    "durability and recovery expectations",
+    "maintenance tolerance: compaction, vacuum, checkpoints, rebuilds",
+    "secondary index needs",
+    "storage medium and IO constraints"
+  ],
+  "ask_if_missing": [
+    "Is the workload read/range-heavy, write/append-heavy, analytical scan-heavy, or mixed?",
+    "Are latency spikes from compaction/checkpointing acceptable?"
+  ],
+  "assume_if_low_risk": [
+    "prefer B-Tree-like access for stable low-latency reads and ranges",
+    "prefer LSM-like access for high write throughput when compaction can be managed"
+  ],
+  "branches": [
+    {
+      "criteria": "range scans, ordered iteration, and predictable point reads dominate",
+      "recommendation": "favor B-Tree/B+Tree-style indexes and monitor page fragmentation, buffer hit rate, and split/merge churn",
+      "load": [
+        "references/btree-lsm-tradeoffs.md",
+        "references/storage-engine-internals.md"
+      ]
+    },
+    {
+      "criteria": "append-heavy or write-heavy workload dominates",
+      "recommendation": "favor LSM/SSTable-style storage if compaction, tombstones, read amplification, and Bloom filters are operationally managed",
+      "load": [
+        "references/btree-lsm-tradeoffs.md"
+      ]
+    },
+    {
+      "criteria": "analytical scans and aggregation over few columns dominate",
+      "recommendation": "favor column-oriented layout or derived analytical store; reason about compression, vectorized scans, and materialization",
+      "load": [
+        "references/storage-engine-internals.md",
+        "references/dimensional-database-design.md"
+      ]
+    },
+    {
+      "criteria": "incident involves crash recovery or acknowledged writes",
+      "recommendation": "trace WAL, dirty page flushing, checkpoint, redo/undo, and force/steal semantics before blaming application code",
+      "load": [
+        "references/storage-engine-internals.md"
+      ]
+    }
+  ],
+  "failure_modes": [
+    "choosing LSM for writes but ignoring compaction backlog and tombstone read cost",
+    "choosing B-Tree for high churn but ignoring fragmentation and vacuum/maintenance",
+    "adding secondary indexes without write amplification budget",
+    "assuming acknowledged write equals durable write without checking WAL/fsync policy",
+    "mixing OLTP and scan-heavy workloads in one cache without isolation"
+  ],
+  "output_checks": [
+    "states access pattern and layout choice",
+    "states read/write/space amplification tradeoff",
+    "covers cache/buffer behavior",
+    "covers recovery and durability path",
+    "names maintenance and metrics to watch"
+  ]
+}

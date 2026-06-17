@@ -1,0 +1,52 @@
+{
+  "decision_id": "normalization_depth",
+  "purpose": "Choose target normal form depth and when to denormalize for usability, performance, or analytics.",
+  "required_context": [
+    "workload type",
+    "candidate tables and dependencies",
+    "known insert/update/delete anomalies",
+    "expected joins and query patterns",
+    "integrity vs performance priority",
+    "who writes queries and maintains the schema"
+  ],
+  "ask_if_missing": [
+    "Which anomalies or duplicate facts are causing real risk?",
+    "What join/query patterns must remain simple and fast?"
+  ],
+  "assume_if_low_risk": [
+    "target 3NF for OLTP unless deeper normalization has a concrete integrity payoff",
+    "prefer star-like denormalized structures for analytical warehouse access"
+  ],
+  "branches": [
+    {
+      "criteria": "OLTP with concurrent updates and clear dependencies",
+      "recommendation": "normalize through 3NF, enforce primary/foreign keys, and consider deeper forms only for concrete anomaly risk"
+    },
+    {
+      "criteria": "beyond-3NF split mainly creates tiny tables or many joins",
+      "recommendation": "stop before over-normalization; enforce edge rules in constraints/application logic if simpler"
+    },
+    {
+      "criteria": "warehouse or reporting workload over large history",
+      "recommendation": "denormalize into facts and dimensions; avoid deep normalized joins in analyst-facing structures"
+    },
+    {
+      "criteria": "denormalization duplicates values or stores derived values",
+      "recommendation": "define source of truth, refresh/update path, reconciliation, and stale-value tolerance"
+    }
+  ],
+  "failure_modes": [
+    "normalizing because a higher normal form exists, not because it helps",
+    "leaving repeating groups/list fields in OLTP tables",
+    "creating many-to-many resolution tables with no business meaning or application need",
+    "denormalizing without ownership of duplicate/derived facts",
+    "mistaking better integrity for better query performance in all workloads"
+  ],
+  "output_checks": [
+    "states target normal form",
+    "names anomalies/dependencies handled",
+    "states rejected deeper normal forms and why",
+    "quantifies join/usability impact where possible",
+    "documents denormalization safeguards"
+  ]
+}

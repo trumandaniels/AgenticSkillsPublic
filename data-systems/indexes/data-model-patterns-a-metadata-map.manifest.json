@@ -1,0 +1,310 @@
+{
+  "source_id": "data-model-patterns-a-metadata-map",
+  "title": "Data Model Patterns: A Metadata Map",
+  "author": "David C. Hay",
+  "version_or_edition": "Morgan Kaufmann 2006 source extraction",
+  "checksum": "0ad115c6efbd03481fe220163fd80d32d3dee836a16bc118f3495970e0d922f9",
+  "source_path": "C:\\Users\\Truman\\Documents\\Programming\\AgenticKnowledge\\Experts\\Data\\data-model-patterns-a-metadata-map.md",
+  "copyright_policy": "User-provided local source. Use for compact doctrine, decision support, and anchored summaries only; do not reproduce long passages.",
+  "chunks": [
+    {
+      "anchor_id": "dmpmm_ch1_metadata_framework",
+      "heading_path": [
+        "About Metadata Models",
+        "Architecture Framework",
+        "Metamodels",
+        "Abstraction"
+      ],
+      "start_offset": 516,
+      "end_offset": 1108,
+      "keywords": [
+        "metadata",
+        "metadata repository",
+        "architecture framework",
+        "rows",
+        "columns",
+        "metamodel",
+        "abstraction"
+      ],
+      "decision_nodes": [
+        "metadata_architecture_map",
+        "conceptual_modeling"
+      ],
+      "claim_types": [
+        "doctrine",
+        "taxonomy",
+        "scope"
+      ]
+    },
+    {
+      "anchor_id": "dmpmm_ch2_data_business_language",
+      "heading_path": [
+        "Data",
+        "Business Terms, Concepts, And Fact Types"
+      ],
+      "start_offset": 1121,
+      "end_offset": 1958,
+      "keywords": [
+        "business term",
+        "business concept",
+        "semantic community",
+        "ontology",
+        "proposition",
+        "fact type",
+        "data stewardship"
+      ],
+      "decision_nodes": [
+        "business_glossary_fact_model",
+        "business_rule_data_quality"
+      ],
+      "claim_types": [
+        "doctrine",
+        "taxonomy",
+        "model_pattern"
+      ]
+    },
+    {
+      "anchor_id": "dmpmm_ch2_data_architect_designer",
+      "heading_path": [
+        "Data",
+        "Entity-Relationship Diagram",
+        "Data Design",
+        "Production System"
+      ],
+      "start_offset": 1959,
+      "end_offset": 3374,
+      "keywords": [
+        "entity class",
+        "attribute",
+        "relationship role",
+        "domain",
+        "data design",
+        "tables",
+        "columns",
+        "production database"
+      ],
+      "decision_nodes": [
+        "business_glossary_fact_model",
+        "conceptual_modeling",
+        "persistence_mapping_pattern"
+      ],
+      "claim_types": [
+        "doctrine",
+        "model_pattern",
+        "mapping"
+      ]
+    },
+    {
+      "anchor_id": "dmpmm_ch3_activities",
+      "heading_path": [
+        "Activities, Functions, And Processes"
+      ],
+      "start_offset": 3375,
+      "end_offset": 5347,
+      "keywords": [
+        "activity",
+        "function",
+        "business process",
+        "system process",
+        "data flow",
+        "use case",
+        "program inventory"
+      ],
+      "decision_nodes": [
+        "metadata_architecture_map",
+        "enterprise_layering"
+      ],
+      "claim_types": [
+        "doctrine",
+        "taxonomy",
+        "mapping"
+      ]
+    },
+    {
+      "anchor_id": "dmpmm_ch4_locations",
+      "heading_path": [
+        "Locations"
+      ],
+      "start_offset": 5348,
+      "end_offset": 6578,
+      "keywords": [
+        "location",
+        "geographic location",
+        "logistics",
+        "network",
+        "deployment",
+        "system inventory"
+      ],
+      "decision_nodes": [
+        "metadata_architecture_map",
+        "partitioning_strategy"
+      ],
+      "claim_types": [
+        "doctrine",
+        "taxonomy",
+        "mapping"
+      ]
+    },
+    {
+      "anchor_id": "dmpmm_ch5_people_organizations",
+      "heading_path": [
+        "People And Organizations"
+      ],
+      "start_offset": 6579,
+      "end_offset": 7554,
+      "keywords": [
+        "party",
+        "person",
+        "organization",
+        "role",
+        "stewardship",
+        "access",
+        "security",
+        "governance"
+      ],
+      "decision_nodes": [
+        "metadata_architecture_map",
+        "enterprise_pattern_selection"
+      ],
+      "claim_types": [
+        "doctrine",
+        "model_pattern",
+        "governance"
+      ]
+    },
+    {
+      "anchor_id": "dmpmm_ch6_events_timing",
+      "heading_path": [
+        "Events And Timing"
+      ],
+      "start_offset": 7555,
+      "end_offset": 8424,
+      "keywords": [
+        "event type",
+        "business event",
+        "system event",
+        "program event",
+        "temporal event",
+        "state transition",
+        "entity life history"
+      ],
+      "decision_nodes": [
+        "metadata_architecture_map",
+        "derived_data_strategy",
+        "computation_mode"
+      ],
+      "claim_types": [
+        "doctrine",
+        "taxonomy",
+        "mapping"
+      ]
+    },
+    {
+      "anchor_id": "dmpmm_ch7_motivation_business_owner",
+      "heading_path": [
+        "Motivation",
+        "Business Owner View"
+      ],
+      "start_offset": 8425,
+      "end_offset": 9053,
+      "keywords": [
+        "motivation",
+        "vision",
+        "mission",
+        "ends",
+        "means",
+        "strategy",
+        "tactic",
+        "policy",
+        "business rule"
+      ],
+      "decision_nodes": [
+        "business_rule_data_quality",
+        "metadata_architecture_map"
+      ],
+      "claim_types": [
+        "doctrine",
+        "taxonomy",
+        "governance"
+      ]
+    },
+    {
+      "anchor_id": "dmpmm_ch7_rules_constraints",
+      "heading_path": [
+        "Motivation",
+        "Architect View",
+        "Business Rules",
+        "System Constraints"
+      ],
+      "start_offset": 9054,
+      "end_offset": 10190,
+      "keywords": [
+        "business rule",
+        "system constraint",
+        "unique identifier",
+        "optionality",
+        "cardinality",
+        "derivation",
+        "exclusivity",
+        "rule mapping"
+      ],
+      "decision_nodes": [
+        "business_rule_data_quality",
+        "business_glossary_fact_model"
+      ],
+      "claim_types": [
+        "doctrine",
+        "model_pattern",
+        "constraints"
+      ]
+    },
+    {
+      "anchor_id": "dmpmm_ch7_enforcement_quality",
+      "heading_path": [
+        "Motivation",
+        "Designer View",
+        "Data Quality"
+      ],
+      "start_offset": 10191,
+      "end_offset": 10881,
+      "keywords": [
+        "database constraint",
+        "program constraint",
+        "computed column",
+        "domain",
+        "data quality",
+        "enforcement",
+        "measurement"
+      ],
+      "decision_nodes": [
+        "business_rule_data_quality",
+        "transaction_consistency",
+        "derived_data_strategy"
+      ],
+      "claim_types": [
+        "doctrine",
+        "implementation",
+        "quality"
+      ]
+    },
+    {
+      "anchor_id": "dmpmm_glossary_references",
+      "heading_path": [
+        "Glossary",
+        "References"
+      ],
+      "start_offset": 10882,
+      "end_offset": 11417,
+      "keywords": [
+        "glossary",
+        "definitions",
+        "references"
+      ],
+      "decision_nodes": [],
+      "claim_types": [
+        "definition_support",
+        "source_metadata"
+      ]
+    }
+  ]
+}

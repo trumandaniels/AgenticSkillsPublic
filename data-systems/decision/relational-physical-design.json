@@ -1,0 +1,54 @@
+{
+  "decision_id": "relational_physical_design",
+  "purpose": "Choose keys, indexes, datatypes, views, materialized views, partitions, clustering, and hardware-aware physical design.",
+  "required_context": [
+    "read/write ratio and concurrency",
+    "largest tables and growth rates",
+    "query filters, joins, sorts, and groupings",
+    "primary/foreign/unique/surrogate key choices",
+    "datatype and NULL patterns",
+    "warehouse load cadence and reporting access",
+    "storage, memory, CPU, availability, and service-window constraints"
+  ],
+  "ask_if_missing": [
+    "Which queries or write paths justify each proposed index?",
+    "Are foreign keys indexed in the high-concurrency write paths?"
+  ],
+  "assume_if_low_risk": [
+    "avoid speculative alternate indexes during early design",
+    "prefer simple BTree-style indexes for frequently changing OLTP tables"
+  ],
+  "branches": [
+    {
+      "criteria": "high-concurrency OLTP with referential integrity",
+      "recommendation": "index important foreign keys, keep alternate indexes limited, and monitor write overhead/locking"
+    },
+    {
+      "criteria": "small static table or query usually reads most rows",
+      "recommendation": "avoid alternate indexes unless join complexity or foreign-key checks justify them"
+    },
+    {
+      "criteria": "read-heavy warehouse/reporting with repeated joins or aggregations",
+      "recommendation": "consider materialized views, partitions, bitmap/read-only indexes, clustering, or data marts with explicit refresh and maintenance"
+    },
+    {
+      "criteria": "performance problem appears after application code exists",
+      "recommendation": "try low-intrusion indexes/materialized views/overlays before changing base table structure"
+    }
+  ],
+  "failure_modes": [
+    "over-indexing write-heavy OLTP tables",
+    "missing foreign-key indexes causing scans or lock pressure",
+    "large composite indexes nearly as large as the table",
+    "indexing mostly NULL or low-selectivity columns without evidence",
+    "views mistaken for performance improvement",
+    "hardware added to compensate for poor schema/query design"
+  ],
+  "output_checks": [
+    "justifies each index by query or constraint",
+    "states write overhead",
+    "covers foreign-key indexes",
+    "defines materialized-view refresh/staleness if used",
+    "connects physical design to workload and operational constraints"
+  ]
+}

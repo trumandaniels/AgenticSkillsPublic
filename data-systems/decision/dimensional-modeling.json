@@ -1,0 +1,53 @@
+{
+  "decision_id": "dimensional_modeling",
+  "purpose": "Design warehouse facts, dimensions, star/snowflake schemas, grain, retention, and OLTP/warehouse separation.",
+  "required_context": [
+    "analytical subject areas and reports",
+    "source systems and identity differences",
+    "fact grain and event/transaction history",
+    "dimension candidates and hierarchies",
+    "retention and summarization requirements",
+    "load cadence and freshness",
+    "query performance needs and storage budget"
+  ],
+  "ask_if_missing": [
+    "What is one row in each fact table?",
+    "Which dimensions describe the facts and at what hierarchy levels?"
+  ],
+  "assume_if_low_risk": [
+    "prefer star schema for analyst-facing access",
+    "retain lowest practical grain until future reporting needs are known"
+  ],
+  "branches": [
+    {
+      "criteria": "operational and analytical workloads are both required",
+      "recommendation": "separate OLTP source model from warehouse/dimensional serving model"
+    },
+    {
+      "criteria": "analysts need simple fast reports over huge fact tables",
+      "recommendation": "use star schema with direct dimension joins and materialized summaries as needed"
+    },
+    {
+      "criteria": "dimension hierarchies are large, shared, or independently governed",
+      "recommendation": "allow selective snowflaking internally, but expose simplified marts/views where query simplicity matters"
+    },
+    {
+      "criteria": "multiple source systems identify the same entity differently",
+      "recommendation": "use warehouse surrogate keys plus preserved source natural keys and lineage"
+    }
+  ],
+  "failure_modes": [
+    "using OLTP normalized schema directly as the warehouse model",
+    "fact grain is mixed or unstated",
+    "snowflake schemas create unnecessary reporting joins",
+    "summaries destroy detail needed for future analysis",
+    "surrogate keys hide source identity and lineage"
+  ],
+  "output_checks": [
+    "states fact grain",
+    "names fact and dimension tables",
+    "chooses star/snowflake with rationale",
+    "covers surrogate key and source-key lineage",
+    "states retention, summarization, and refresh strategy"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "decision_id": "business_rule_data_quality",
+  "purpose": "Trace business policies and rules into data constraints, derivations, enforcement mechanisms, and data-quality evidence.",
+  "required_context": [
+    "policy or rule text",
+    "affected terms, concepts, fact types, entities, attributes, relationships, domains, states, and events",
+    "whether the rule is advisory, mandatory, temporal, jurisdictional, or state-dependent",
+    "canonical enforcement point",
+    "secondary validation/detection points",
+    "quality metric, threshold, owner, and remediation process"
+  ],
+  "ask_if_missing": [
+    "What business fact or state transition does the rule constrain?",
+    "Where must enforcement happen, and where is detection sufficient?"
+  ],
+  "assume_if_low_risk": [
+    "treat important nullable/not-null, unique, cardinality, domain, and derivation choices as business-rule metadata",
+    "prefer one canonical enforcement point plus observable quality checks"
+  ],
+  "branches": [
+    {
+      "criteria": "rule can be expressed as identifier, referential, cardinality, optionality, domain, or exclusivity constraint",
+      "recommendation": "model it as a system constraint and map it to database and application enforcement where appropriate"
+    },
+    {
+      "criteria": "rule changes by lifecycle state, event, deadline, role, jurisdiction, or source",
+      "recommendation": "avoid a static flag; model conditional basis and enforcement timing explicitly"
+    },
+    {
+      "criteria": "value is derived, materialized, or cached",
+      "recommendation": "capture formula, source facts, effective period, recomputation trigger, source of record, and reconciliation checks"
+    },
+    {
+      "criteria": "rule cannot be fully automated",
+      "recommendation": "document manual control, responsible party, exception workflow, detection metric, and audit evidence"
+    }
+  ],
+  "failure_modes": [
+    "business rules stored only as natural-language notes",
+    "database nullability or check constraints have no business-rule trace",
+    "derived values lack source facts, recomputation triggers, or stale-value detection",
+    "enforcement duplicated across systems with no canonical owner",
+    "quality checks report technical anomalies but not business-rule violations"
+  ],
+  "output_checks": [
+    "links policy/rule to affected concepts and fact types",
+    "classifies the constraint type",
+    "names enforcement and detection mechanisms",
+    "covers state/time-dependent conditions",
+    "defines data-quality measurement, owner, cadence, and remediation"
+  ]
+}

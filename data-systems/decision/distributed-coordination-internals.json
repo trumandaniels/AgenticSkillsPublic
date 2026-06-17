@@ -1,0 +1,70 @@
+{
+  "decision_id": "distributed_coordination_internals",
+  "purpose": "Choose or diagnose distributed-database coordination behavior: failure detection, leader election, delivery semantics, consistency, anti-entropy, distributed commit, and consensus.",
+  "required_context": [
+    "coordination problem: membership, leader, ordering, replication, commit, repair, or client guarantee",
+    "failure model and partition assumptions",
+    "latency and availability requirements",
+    "consistency guarantee required by users",
+    "idempotency and duplicate-handling strategy",
+    "replication factor, quorum settings, and conflict-resolution model",
+    "observability of lag, repair, leader changes, and failed messages"
+  ],
+  "ask_if_missing": [
+    "What user-visible consistency guarantee is required?",
+    "What happens if the operation succeeds but the acknowledgement is lost?"
+  ],
+  "assume_if_low_risk": [
+    "treat failure detector output as suspicion",
+    "require idempotency/deduplication for retried side-effecting operations"
+  ],
+  "branches": [
+    {
+      "criteria": "operation may be retried after timeout or lost acknowledgement",
+      "recommendation": "design explicit idempotency/deduplication and separate delivery from durable processing",
+      "load": [
+        "references/distributed-database-internals.md",
+        "decision/derived-data-strategy.json"
+      ]
+    },
+    {
+      "criteria": "leader authority or failover is central",
+      "recommendation": "define election, term/epoch, fencing, client discovery, stale leader behavior, and split-brain prevention",
+      "load": [
+        "references/distributed-database-internals.md",
+        "decision/replication-strategy.json"
+      ]
+    },
+    {
+      "criteria": "eventual consistency is acceptable but convergence matters",
+      "recommendation": "define anti-entropy/read repair/gossip/versioning/conflict resolution and observe repair lag",
+      "load": [
+        "references/distributed-database-internals.md",
+        "decision/replication-strategy.json"
+      ]
+    },
+    {
+      "criteria": "atomic cross-node commit or ordering is required",
+      "recommendation": "evaluate distributed transaction or consensus-backed design, including blocking risk, quorum cost, and failure recovery",
+      "load": [
+        "references/distributed-database-internals.md",
+        "decision/transaction-consistency.json"
+      ]
+    }
+  ],
+  "failure_modes": [
+    "assuming network reliability or zero latency",
+    "confusing exactly-once delivery with exactly-once durable processing",
+    "failure detector false positives cause unsafe failover",
+    "quorum settings are named but conflict resolution and repair are omitted",
+    "2PC blocking risk is ignored",
+    "consensus is added without stating the correctness property it provides"
+  ],
+  "output_checks": [
+    "states failure/synchrony model",
+    "states user-visible consistency model",
+    "covers retries and duplicate handling",
+    "covers leader/quorum/repair/consensus health metrics as applicable",
+    "states availability and latency tradeoff"
+  ]
+}

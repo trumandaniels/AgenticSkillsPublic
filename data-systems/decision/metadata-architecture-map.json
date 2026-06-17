@@ -1,0 +1,71 @@
+{
+  "decision_id": "metadata_architecture_map",
+  "purpose": "Scope a metadata repository or metamodel across architecture-framework rows and columns.",
+  "required_context": [
+    "primary users of the metadata",
+    "business vs technical metadata goals",
+    "columns in scope: data, activities, locations, people, time/events, motivation",
+    "rows in scope: business owner, architect, designer, builder, functioning system",
+    "required traceability paths",
+    "stewardship and approval model",
+    "production inventory and freshness needs"
+  ],
+  "ask_if_missing": [
+    "Which governance or operational decisions must this metadata support?",
+    "Which mappings must be traceable from business meaning to implementation?"
+  ],
+  "assume_if_low_risk": [
+    "start with business-owner and architect rows before physical inventory",
+    "treat table/column catalog as technical metadata, not the whole repository"
+  ],
+  "branches": [
+    {
+      "criteria": "business glossary, semantic reconciliation, or concept ownership is the main need",
+      "recommendation": "prioritize Data column Row Two and Row Three: terms, concepts, semantic communities, fact types, entity classes, attributes, domains, and stewardship",
+      "load": [
+        "references/metadata-map.md",
+        "references/metadata-column-patterns.md",
+        "decision/business-glossary-fact-model.json"
+      ]
+    },
+    {
+      "criteria": "lineage from policies/rules into controls and data-quality evidence is the main need",
+      "recommendation": "prioritize Motivation column mappings from policy to business rule to system constraint to enforcement and measurement",
+      "load": [
+        "references/business-rules-data-quality.md",
+        "decision/business-rule-data-quality.json"
+      ]
+    },
+    {
+      "criteria": "catalog must support development and operations across systems",
+      "recommendation": "include designer/builder/functioning-system rows for schemas, program modules, interfaces, deployments, owners, logs, and freshness checks",
+      "load": [
+        "references/metadata-map.md",
+        "references/metadata-column-patterns.md"
+      ]
+    },
+    {
+      "criteria": "event-driven or workflow architecture is central",
+      "recommendation": "include Activities and Events columns, mapping function/process/event type to system process, program event, state change, and logs",
+      "load": [
+        "references/metadata-column-patterns.md",
+        "decision/computation-mode.json",
+        "decision/derived-data-strategy.json"
+      ]
+    }
+  ],
+  "failure_modes": [
+    "metadata repository is only a database dictionary and cannot answer business meaning questions",
+    "glossary terms are not scoped by semantic community or context",
+    "business rules are prose with no link to concepts, constraints, implementation, or evidence",
+    "production inventories are stale because ownership and freshness are undefined",
+    "business and technical artifacts are merged without explicit mapping relationships"
+  ],
+  "output_checks": [
+    "states row/column scope",
+    "separates business metadata, technical metadata, and meta-metadata",
+    "names mapping relationships across rows",
+    "assigns stewardship for governed metadata",
+    "includes validation/freshness checks for the repository itself"
+  ]
+}

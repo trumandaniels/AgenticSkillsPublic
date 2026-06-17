@@ -1,0 +1,60 @@
+{
+  "decision_id": "relational_database_design_workflow",
+  "purpose": "Move from requirements analysis to relational ERD/table design, construction, implementation, and tuning feedback.",
+  "required_context": [
+    "business objective and operational subject areas",
+    "users and interview sources",
+    "existing paper/spreadsheet/database/application evidence",
+    "OLTP, warehouse, reporting, or hybrid workload",
+    "expected queries, transactions, concurrency, growth, and service windows",
+    "budget, timeline, skills, and maintenance constraints"
+  ],
+  "ask_if_missing": [
+    "Is this database primarily OLTP, analytical/warehouse, or hybrid?",
+    "What are the highest-value user workflows and reports?"
+  ],
+  "assume_if_low_risk": [
+    "start with analysis and ERD-level design before vendor-specific DDL",
+    "separate operational and analytical workloads when their needs conflict"
+  ],
+  "branches": [
+    {
+      "criteria": "new relational application with unclear requirements",
+      "recommendation": "perform requirements analysis, identify subject-area tables, draw ERD, then refine fields, keys, datatypes, and constraints",
+      "load": [
+        "references/relational-database-design.md",
+        "decision/normalization-depth.json"
+      ]
+    },
+    {
+      "criteria": "existing database, spreadsheet, or paper process is being replaced",
+      "recommendation": "use old artifacts as evidence, identify why the old system fails, then design the target structure from required operations and rules",
+      "load": [
+        "references/relational-database-design.md",
+        "references/normalization-denormalization.md"
+      ]
+    },
+    {
+      "criteria": "performance and reporting are central from the beginning",
+      "recommendation": "classify OLTP vs warehouse needs early, because workload determines normalization, dimensional modeling, indexing, and physical design",
+      "load": [
+        "references/dimensional-database-design.md",
+        "references/keys-indexes-physical-design.md"
+      ]
+    }
+  ],
+  "failure_modes": [
+    "starting with DDL before requirements and ERD analysis",
+    "copying old structures without diagnosing old-system failures",
+    "interviewing only technical staff and missing end-user operations",
+    "ignoring performance until after table structure is locked",
+    "using generic industry models without pruning irrelevant scope"
+  ],
+  "output_checks": [
+    "states analysis/design/construction/implementation stage",
+    "classifies workload",
+    "names tables, relationships, and key business rules",
+    "captures open questions for users or existing artifacts",
+    "includes validation and tuning plan"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "decision_id": "business_glossary_fact_model",
+  "purpose": "Choose how to model business terms, concepts, ontologies, fact types, entity classes, attributes, domains, and stewardship.",
+  "required_context": [
+    "semantic communities and languages/contexts",
+    "known synonyms, homonyms, and contested terms",
+    "business concepts that may not appear in the data model",
+    "fact types/propositions needed for rules or analytics",
+    "relationship to entity classes, attributes, domains, tables, and columns",
+    "term/concept owners and stewards"
+  ],
+  "ask_if_missing": [
+    "Which communities use conflicting vocabulary?",
+    "Do you need glossary-only governance, conceptual modeling, or implementation traceability?"
+  ],
+  "assume_if_low_risk": [
+    "model concept separately from term so synonyms and homonyms are not destructive",
+    "start with business concepts and fact types before table/column mapping"
+  ],
+  "branches": [
+    {
+      "criteria": "same word means different things or different words mean the same thing",
+      "recommendation": "separate signifier/term from business concept and scope term usage by language, semantic community, and context"
+    },
+    {
+      "criteria": "rules, policies, analytics, or automated reasoning depend on relationships among concepts",
+      "recommendation": "model propositions and fact types explicitly, then map fact-type elements to entity classes, attributes, and relationship roles"
+    },
+    {
+      "criteria": "the goal is a physical catalog only",
+      "recommendation": "still map tables/columns to business concepts and domains; flag unmapped columns and concept gaps"
+    },
+    {
+      "criteria": "controlled reference data constrains many attributes",
+      "recommendation": "treat the code set/domain as both business data and metadata; assign ownership, lifecycle, and validation rules"
+    }
+  ],
+  "failure_modes": [
+    "using a word or phrase as the concept identity",
+    "hiding homonyms under one glossary row",
+    "ignoring concepts important to the business because no column stores them yet",
+    "documenting fact types as informal prose with no structural link to rules or data models",
+    "no steward for term/concept/domain changes"
+  ],
+  "output_checks": [
+    "distinguishes term, concept, symbol/context, ontology, proposition, and fact type",
+    "states how concepts map to entity classes/attributes/domains or why they do not",
+    "handles synonyms and homonyms",
+    "assigns stewardship",
+    "marks reference data/code sets that function as metadata"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "decision_id": "source_boundary_routing",
+  "purpose": "Choose the governing source doctrine and abstraction layer when a data-system design spans conceptual models, metadata, enterprise application patterns, relational schemas, distributed dataflows, and storage internals.",
+  "required_context": [
+    "primary artifact being designed or reviewed",
+    "business concepts and invariants",
+    "current system artifacts being used as evidence",
+    "source-of-record candidates and derived projections",
+    "application boundary and caller shape",
+    "schema or warehouse workload",
+    "distributed guarantees and failure tolerance",
+    "storage-engine bottleneck or durability question",
+    "known conflict between layers"
+  ],
+  "ask_if_missing": [
+    "Which artifact is intended to be authoritative: conceptual model, operational schema, service API, metadata repository, warehouse, index, or storage engine?",
+    "Which invariants must remain true from the user's or auditor's perspective?",
+    "Is the design optimizing business meaning, developer ergonomics, operational integrity, query performance, scale, or recovery?"
+  ],
+  "assume_if_low_risk": [
+    "Treat existing schemas, screens, and APIs as evidence, not conceptual truth.",
+    "Treat caches, search indexes, warehouses, embeddings, and materialized views as derived until the user states otherwise.",
+    "Prefer local domain collaboration and coarse remote boundaries unless there is an explicit independent ownership boundary."
+  ],
+  "branches": [
+    {
+      "if": "the task asks what business things exist, how they relate, or how to integrate enterprise semantics",
+      "then": "route first to Enterprise Model Patterns and conceptual-modeling decisions",
+      "watch": "do not copy physical tables or forms directly into conceptual entities"
+    },
+    {
+      "if": "the task asks how terms, rules, lineage, owners, schemas, processes, events, and reference values are governed or traced",
+      "then": "route first to Metadata Map and metadata/business-rule decisions",
+      "watch": "do not stop at technical catalog inventory"
+    },
+    {
+      "if": "the task asks how application code, domain logic, persistence mapping, session state, or remote APIs should be organized",
+      "then": "route first to PoEAA and enterprise application decisions",
+      "watch": "do not distribute fine-grained objects or hide domain logic in presentation, gateways, or remote facades"
+    },
+    {
+      "if": "the task asks how data moves across services/stores or how derived data, evolution, replication, partitioning, transactions, or consistency should work",
+      "then": "route first to DDIA and distributed/derived/evolution decisions",
+      "watch": "separate source of record from rebuildable derived data"
+    },
+    {
+      "if": "the task asks for ERD, tables, fields, constraints, practical normal forms, denormalization, warehouse grain, or indexes",
+      "then": "route first to Beginning Database Design and relational/dimensional/physical decisions",
+      "watch": "keep OLTP and analytical models separate when workloads diverge"
+    },
+    {
+      "if": "the task asks why a database behaves poorly or whether storage/distribution internals affect correctness or performance",
+      "then": "route first to Database Internals and storage/distributed internals decisions",
+      "watch": "validate with workload, logs, recovery evidence, and failure assumptions"
+    }
+  ],
+  "failure_modes": [
+    "using one physical schema as the enterprise conceptual model",
+    "calling a cache, index, warehouse, or vector store canonical without ownership and reconciliation rules",
+    "letting remote API shape dictate fine-grained domain objects",
+    "using database product labels instead of workload and failure-mode reasoning",
+    "normalizing or denormalizing without stating the invariant and source of truth",
+    "treating metadata as only tables and columns"
+  ],
+  "output_checks": [
+    "names the governing source layer and secondary layers",
+    "states what the chosen layer does not decide",
+    "separates conceptual model, application model, relational model, metadata model, derived data, and storage internals when relevant",
+    "identifies durable owners and rebuildable projections",
+    "includes validation evidence appropriate to each layer"
+  ]
+}

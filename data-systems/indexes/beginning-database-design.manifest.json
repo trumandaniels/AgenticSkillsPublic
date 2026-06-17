@@ -1,0 +1,371 @@
+{
+  "source_id": "beginning-database-design",
+  "title": "Beginning Database Design",
+  "author": "Gavin Powell",
+  "version_or_edition": "Wiley/Wrox 2006 source extraction",
+  "checksum": "4741b52e9d629d23a56843085e93335b98de0abdd98d439437afaa00613898bd",
+  "source_path": "C:\\Users\\Truman\\Documents\\Programming\\AgenticKnowledge\\Experts\\Data\\beginning-database-design.md",
+  "copyright_policy": "User-provided local source. Use for compact doctrine, decision support, and anchored summaries only; do not reproduce long passages.",
+  "chunks": [
+    {
+      "anchor_id": "bdd_front_matter_intro",
+      "heading_path": [
+        "Beginning Database Design",
+        "Introduction",
+        "Structure"
+      ],
+      "start_offset": 1,
+      "end_offset": 872,
+      "keywords": [
+        "scope",
+        "database design",
+        "book structure",
+        "normalization",
+        "warehouse",
+        "performance"
+      ],
+      "decision_nodes": [],
+      "claim_types": [
+        "source_metadata",
+        "scope"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch1_ch2_modeling_workplace",
+      "heading_path": [
+        "Database Modeling Past and Present",
+        "Database Modeling in the Workplace"
+      ],
+      "start_offset": 873,
+      "end_offset": 1544,
+      "keywords": [
+        "database model",
+        "application",
+        "objectives",
+        "business rules",
+        "people",
+        "legacy",
+        "spreadsheets"
+      ],
+      "decision_nodes": [
+        "relational_database_design_workflow",
+        "data_model_choice"
+      ],
+      "claim_types": [
+        "doctrine",
+        "workflow",
+        "requirements"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch3_building_blocks",
+      "heading_path": [
+        "Database Modeling Building Blocks"
+      ],
+      "start_offset": 1545,
+      "end_offset": 2571,
+      "keywords": [
+        "tables",
+        "rows",
+        "columns",
+        "datatypes",
+        "relationships",
+        "keys",
+        "referential integrity",
+        "indexes",
+        "views"
+      ],
+      "decision_nodes": [
+        "relational_database_design_workflow",
+        "relational_physical_design"
+      ],
+      "claim_types": [
+        "doctrine",
+        "taxonomy",
+        "implementation"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch4_normalization",
+      "heading_path": [
+        "Understanding Normalization"
+      ],
+      "start_offset": 2572,
+      "end_offset": 4078,
+      "keywords": [
+        "normalization",
+        "anomalies",
+        "dependencies",
+        "normal forms",
+        "1NF",
+        "2NF",
+        "3NF",
+        "BCNF",
+        "DKNF"
+      ],
+      "decision_nodes": [
+        "normalization_depth"
+      ],
+      "claim_types": [
+        "doctrine",
+        "decision_support",
+        "constraints"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch5_sql",
+      "heading_path": [
+        "Reading and Writing Data with SQL"
+      ],
+      "start_offset": 4079,
+      "end_offset": 5382,
+      "keywords": [
+        "SQL",
+        "queries",
+        "joins",
+        "transactions",
+        "metadata changes",
+        "DDL"
+      ],
+      "decision_nodes": [
+        "relational_database_design_workflow",
+        "relational_physical_design"
+      ],
+      "claim_types": [
+        "implementation",
+        "query_design"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch6_advanced_relational",
+      "heading_path": [
+        "Advanced Relational Database Modeling"
+      ],
+      "start_offset": 5383,
+      "end_offset": 5906,
+      "keywords": [
+        "denormalization",
+        "object model",
+        "warehouse introduction",
+        "specialized objects"
+      ],
+      "decision_nodes": [
+        "normalization_depth",
+        "dimensional_modeling"
+      ],
+      "claim_types": [
+        "doctrine",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch7_warehouse",
+      "heading_path": [
+        "Understanding Data Warehouse Database Modeling"
+      ],
+      "start_offset": 5907,
+      "end_offset": 6388,
+      "keywords": [
+        "data warehouse",
+        "OLTP",
+        "surrogate key",
+        "referential integrity",
+        "dimensional model",
+        "star schema",
+        "snowflake schema",
+        "fact",
+        "dimension"
+      ],
+      "decision_nodes": [
+        "dimensional_modeling",
+        "normalization_depth"
+      ],
+      "claim_types": [
+        "doctrine",
+        "model_pattern",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch8_performance",
+      "heading_path": [
+        "Building Fast-Performing Database Models"
+      ],
+      "start_offset": 6389,
+      "end_offset": 6789,
+      "keywords": [
+        "performance",
+        "OLTP tuning",
+        "warehouse tuning",
+        "SQL",
+        "joins",
+        "indexes",
+        "materialized views",
+        "caching"
+      ],
+      "decision_nodes": [
+        "relational_physical_design",
+        "normalization_depth",
+        "dimensional_modeling"
+      ],
+      "claim_types": [
+        "doctrine",
+        "performance",
+        "tradeoff"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch9_analysis_case",
+      "heading_path": [
+        "Planning and Preparation Through Analysis"
+      ],
+      "start_offset": 6790,
+      "end_offset": 7959,
+      "keywords": [
+        "analysis",
+        "design",
+        "construction",
+        "implementation",
+        "paper trail",
+        "business rules",
+        "case study"
+      ],
+      "decision_nodes": [
+        "relational_database_design_workflow"
+      ],
+      "claim_types": [
+        "workflow",
+        "example"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch10_tables_relationships",
+      "heading_path": [
+        "Creating and Refining Tables During the Design Phase"
+      ],
+      "start_offset": 7960,
+      "end_offset": 9310,
+      "keywords": [
+        "tables",
+        "relationships",
+        "referential integrity",
+        "surrogate keys",
+        "identifying relationships",
+        "normalization",
+        "denormalization",
+        "queries"
+      ],
+      "decision_nodes": [
+        "relational_database_design_workflow",
+        "normalization_depth",
+        "relational_physical_design"
+      ],
+      "claim_types": [
+        "workflow",
+        "example",
+        "implementation"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch11_detailed_design",
+      "heading_path": [
+        "Filling In The Details With A Detailed Design"
+      ],
+      "start_offset": 9311,
+      "end_offset": 10060,
+      "keywords": [
+        "field structure",
+        "datatypes",
+        "keys",
+        "indexes",
+        "foreign keys",
+        "alternate indexing"
+      ],
+      "decision_nodes": [
+        "relational_physical_design",
+        "relational_database_design_workflow"
+      ],
+      "claim_types": [
+        "workflow",
+        "implementation",
+        "performance"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch12_business_rules",
+      "heading_path": [
+        "Business Rules And Field Settings"
+      ],
+      "start_offset": 10061,
+      "end_offset": 10988,
+      "keywords": [
+        "business rules",
+        "field settings",
+        "check constraints",
+        "unique constraints",
+        "defaults",
+        "stored procedure",
+        "function",
+        "trigger"
+      ],
+      "decision_nodes": [
+        "business_rule_data_quality",
+        "relational_physical_design"
+      ],
+      "claim_types": [
+        "constraints",
+        "implementation",
+        "governance"
+      ]
+    },
+    {
+      "anchor_id": "bdd_ch13_advanced_physical",
+      "heading_path": [
+        "Advanced Database Structures And Hardware Resources"
+      ],
+      "start_offset": 10989,
+      "end_offset": 11580,
+      "keywords": [
+        "views",
+        "materialized views",
+        "indexes",
+        "autocounters",
+        "partitioning",
+        "parallel processing",
+        "RAID",
+        "standby",
+        "replication",
+        "clustering"
+      ],
+      "decision_nodes": [
+        "relational_physical_design",
+        "partitioning_strategy",
+        "replication_strategy"
+      ],
+      "claim_types": [
+        "implementation",
+        "performance",
+        "operations"
+      ]
+    },
+    {
+      "anchor_id": "bdd_glossary_index",
+      "heading_path": [
+        "Glossary",
+        "Index"
+      ],
+      "start_offset": 11581,
+      "end_offset": 13046,
+      "keywords": [
+        "glossary",
+        "definitions",
+        "index"
+      ],
+      "decision_nodes": [],
+      "claim_types": [
+        "definition_support",
+        "source_metadata"
+      ]
+    }
+  ]
+}
