@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agentic Skill Optimization"
+  short_description: "Benchmark-driven skill diagnosis and improvement"
+  default_prompt: "Use $agentic-skill-optimization to improve this skill with a leakage-safe benchmark and repeated subagent comparison."

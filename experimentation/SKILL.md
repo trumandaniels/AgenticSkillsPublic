@@ -1,6 +1,6 @@
 ---
 name: experimentation
-description: Autonomous optimization workflow for improving code, prompts, agents, skills, benchmarks, or other measurable systems through repeated hypotheses, isolated variants, evaluation, logging, and keep-or-discard decisions. Use when Codex is asked to autonomously improve performance, quality, benchmark scores, model metrics, agent behavior, prompt behavior, skill packages, workflows, tests, or any codebase with a concrete objective; especially when the user asks to iterate, experiment, self-evaluate, optimize, run overnight, improve a skill, build an evaluator, compare variants, or research new methods while measuring progress.
+description: Autonomous optimization workflow for improving code, prompts, agents, skills, benchmarks, or other measurable systems through repeated hypotheses, isolated variants, evaluation, logging, and keep-or-discard decisions. Includes Sleep mode for automatic transcript/correction mining and staged skill updates from old chats, plus on-demand mode for user-directed live experimentation like SkillOpt. Use when Codex is asked to iterate, experiment, self-evaluate, optimize, run overnight, improve a skill, build an evaluator, compare variants, research methods, or measure progress toward a concrete objective.
 ---
 
 # Experimentation
@@ -14,6 +14,23 @@ This skill generalizes the `karpathy/autoresearch` pattern beyond ML training. R
 For choosing an experiment design, dataset split, subagent role, evaluator stack, or release gate, read [references/experimentation-patterns.md](references/experimentation-patterns.md). Use it as the pattern bank for locked regressions, vanilla baselines, perturbation tests, property/fuzz tests, trajectory evals, snapshot replay, repeated-run reliability, rubric decomposition, judge calibration, adversarial sets, holdouts, ablations, and human AI-smell review.
 
 For optimizing filesystem-based skills or prompt/workflow packages, read [references/skill-optimization.md](references/skill-optimization.md). That mode adds package inspection, golden cases, isolated variants, approval gates, and durable learnings.
+
+For Sleep-style agent improvement from prior usage, read [references/skillopt-sleep-pattern.md](references/skillopt-sleep-pattern.md). That mode adapts SkillOpt-Sleep's harvest -> mine -> replay -> consolidate -> gate -> stage -> adopt loop for Codex sessions, nightly runs, experience replay, bounded skill edits, and review-gated self-improvement.
+
+For Codex-budget-only live experiments on local hardware, read [references/skillopt-lite-implementation.md](references/skillopt-lite-implementation.md) and prefer `scripts/skillopt_lite.py` for local scoring, strict validation gates, staged candidate skills, and manual adoption.
+
+For research-backed candidate change families, read [references/agent-experimentation-change-catalog.md](references/agent-experimentation-change-catalog.md). Use it to choose what code, evaluator, dataset, runner, context-control, or skill-patch change to try while keeping the same SkillOpt-style baseline -> candidate -> score -> gate loop.
+
+## Operating Modes
+
+Choose one mode before setup:
+
+- **On-demand mode**: Use for a user-directed live experiment. The user supplies or approves the target, metric, budget, and edit scope. Follow the standard baseline -> variant -> evaluation -> keep/discard loop in this file. For skill packages, also read `references/skill-optimization.md`.
+- **Sleep mode**: Use for automatic agent improvement from prior usage. Harvest old chats or archived sessions, mine explicit user corrections and useful reasoning/trace summaries when present, build a dataset of recurring checkable behaviors, replay/gate candidate skill updates, and stage proposals for review. Read `references/skillopt-sleep-pattern.md` before designing or running this mode.
+
+For lightweight SkillOpt-style runs, keep the model work outside the local harness: Codex proposes the candidate edit, while local scorers run command, golden, regex, exact, or manual checks and the gate stages only candidates that improve the fixed validation score.
+
+Sleep mode may run without a live user direction for each edit, but it must remain review-gated by default: stage proposed skill or memory changes and require adoption unless the user explicitly enabled auto-adopt for a low-risk deterministic suite.
 
 ## Fit Check
 

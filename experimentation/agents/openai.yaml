@@ -1,4 +1,4 @@
 interface:
   display_name: "Experimentation"
-  short_description: "Autonomous experiment and skill optimization loops"
-  default_prompt: "Use $experimentation to improve this project or skill toward a measurable target metric."
+  short_description: "Sleep and on-demand optimization loops"
+  default_prompt: "Use $experimentation in sleep or on-demand mode to improve this project, agent, or skill toward a measurable target."
