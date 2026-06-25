@@ -1,4 +1,4 @@
 interface:
-  display_name: "Agentic Skill Optimization"
-  short_description: "Benchmark-driven skill diagnosis and improvement"
-  default_prompt: "Use $agentic-skill-optimization to improve this skill with a leakage-safe benchmark and repeated subagent comparison."
+  display_name: "Agentic Skill Scaffolding"
+  short_description: "Add procedural-memory scaffolds to skills"
+  default_prompt: "Use $agentic-skill-scaffolding to add ProPlay-inspired procedural memory and training instructions to this target skill."

@@ -1,4 +1,4 @@
 interface:
   display_name: "Market Analyst"
-  short_description: "Evaluate markets, wedges, GTM, and risk"
-  default_prompt: "Use $market-analyst to evaluate whether this product idea is worth pursuing and where a small entrant could win."
+  short_description: "Research markets, models, and wedges"
+  default_prompt: "Use $market-analyst to evaluate this market or product idea, model the opportunity, and identify where a small entrant could differentiate."

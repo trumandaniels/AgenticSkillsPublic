@@ -1,6 +1,6 @@
 ---
 name: market-analyst
-description: Market analysis and opportunity evaluation for startups, new products, SaaS ideas, vertical software, AI tools, marketplaces, and other business concepts. Use when Codex needs to assess market attractiveness, competitive landscape, market openings and wedges, differentiation, customer and buyer understanding, GTM feasibility, pricing and revenue potential, defensibility, timing, execution feasibility, category strategy, or failure modes.
+description: Deep market analysis, opportunity evaluation, and differentiation strategy for startups, new products, SaaS ideas, vertical software, AI tools, marketplaces, and other business concepts. Use when Codex needs to research uncertain markets, gather data, build financial or economic models, score market entry ideas against time/resource constraints, assess TAM/SAM/SOM, pricing, unit economics, GTM feasibility, competitive dynamics, defensibility, timing, category strategy, failure modes, or generate high-quality differentiation angles for existing products.
 ---
 
 # Market Analyst

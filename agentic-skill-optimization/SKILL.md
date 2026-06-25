@@ -1,151 +1,232 @@
 ---
-name: agentic-skill-optimization
-description: Diagnose, revise, and empirically validate existing Codex skills with leakage-safe benchmarks, frozen baseline/candidate copies, independent subagent trials, measured old-vs-new comparisons, process checks, and research-backed rules for minimal modular skill changes. Use when Codex needs to improve a skill package, evaluate whether a skill change actually helps, design skill benchmarks, run paired subagent evaluations, prevent benchmark contamination, or decide whether to keep or discard proposed skill edits.
+name: agentic-skill-scaffolding
+description: Design and install ProPlay-inspired procedural-memory scaffolding for a new or existing Codex skill. Use when Codex needs to create, rename, reorganize, or reshape a target skill package so it can learn reusable procedures from successful episodes, run a preplay-execute-refine loop, automatically capture compact episode memory before final responses, support manual or Codex-mediated memory updates, and forward-test behavior with fresh Codex subagents without requiring API-based agent runners.
 ---
 
-# Agentic Skill Optimization
+# Agentic Skill Scaffolding
 
-## Overview
+## Contract
 
-Improve an existing skill only when there is evidence it performs better. First inspect the skill and diagnose likely failure modes, then create an isolated candidate revision, define a leakage-safe benchmark, and compare the frozen old skill against the frozen new skill using paired subagent runs.
+Transform a target skill into a ProPlay-inspired, Codex-native procedural memory skill. Do this by adding a lightweight structure that lets future Codex runs:
 
-Treat [references/research-report-skill-optimization-updated.md](references/research-report-skill-optimization-updated.md) as the gold-standard research source for how to actually change skills. Read it before substantial skill edits. Use the other research reports as supplemental sources only when their topic is relevant.
+- Preplay: retrieve relevant procedural memory and sketch a task-specific path before acting.
+- Execute: use that path as soft guidance while preserving normal reasoning and user instructions.
+- Capture: default to automatic compact episode capture before the final response when there is reusable signal.
+- Refine: update procedural memory from successful episodes, user corrections, validation results, or failed attempts with useful signal.
+- Evaluate: launch fresh Codex subagents when available, pass only task-local context, and compare outputs before claiming improvement.
 
-For benchmark setup details, read [references/benchmark-protocol.md](references/benchmark-protocol.md) before creating evaluation cases or launching subagents.
+Do not recreate the ProPlay research repo or require OpenAI API keys. The scaffold must work through normal Codex skill usage, local files, and available Codex subagent/thread tools.
 
-## Reference Routing
+## Source Grounding
 
-Load references deliberately:
+Before substantial scaffold design, read [references/proplay-source-map.md](references/proplay-source-map.md). Use it as the local bridge from the ProPlay paper and repository to Codex skill scaffolding.
 
-- Read [research-report-skill-optimization-updated.md](references/research-report-skill-optimization-updated.md) for the primary rules: minimal modular skills, paired controls, realistic retrieval pressure, process evaluation, robustness slices, leakage audits, and measured skill deltas.
-- Read [research-report-skill-optimization.md](references/research-report-skill-optimization.md) for broader academic and industry background, Pareto optimization, hierarchy, reviewer/verifier loops, interface design, and skill-evolution methods.
-- Read [research-report-feedback-loops-agent-perception.md](references/research-report-feedback-loops-agent-perception.md) when designing evaluators, trace grading, feedback loops, observability, judge reliability checks, or anti-Goodhart safeguards.
-- Read [research-report-memory-system.md](references/research-report-memory-system.md) when the target skill involves memory, retrieval, progressive disclosure, context management, skill routing, or long-horizon knowledge maps.
+When installing the default scaffold, prefer running [scripts/init_procedural_memory.py](scripts/init_procedural_memory.py) against the target skill instead of recreating the memory files by hand. Read [references/proplay-scaffold-template.md](references/proplay-scaffold-template.md) when customizing the generated files for a specific domain.
 
-Do not load every research report by default. Start with the updated optimization report, then load supplemental reports only for the diagnosis or benchmark question at hand.
+## Target Inspection
 
-## Core Contract
+Read the target skill's `SKILL.md` completely. Then inspect only directly relevant bundled files:
 
-Use this workflow for skill improvement, not style-only rewriting. Maintain these invariants:
+- `references/` for domain rules, examples, rubrics, existing memory, or prior corrections.
+- `scripts/` for deterministic helpers that should remain the source of truth.
+- `assets/` for templates or output resources.
+- `agents/openai.yaml` for user-facing metadata that may need to stay aligned.
 
-- Freeze a baseline copy of the original skill before editing.
-- Separate diagnosis material from final holdout benchmark cases.
-- Run identical task prompts against old and new skill variants.
-- Optimize for a Pareto frontier: success rate, faithfulness, process compliance, cost, latency, safety, and maintainability.
-- Keep the new skill only when the benchmark shows a real improvement without unacceptable regressions.
+Before editing, identify:
 
-If subagents are unavailable, prepare the benchmark and candidate but stop before claiming measured improvement. Report that validation is pending.
+- Core task families the skill handles.
+- Existing step sequence and validation gates.
+- Places where reusable procedures would reduce drift or repeated re-discovery.
+- Corrections, failure modes, or benchmark examples the user has supplied.
+- Sensitive-data risks that should make auto-capture summarize, redact, or skip details.
 
-## Change Rules
+Preserve the target skill's original purpose. Add procedural memory as scaffolding around the domain workflow, not as a replacement for it.
 
-Before editing, decide which lever is likely to matter. Prefer the smallest lever that addresses the diagnosed failure:
+## Install The Scaffold
 
-- Triggering: improve frontmatter description, naming, and routing cues.
-- Interface: reduce ambiguous tool or action choices; align instructions with the agent's natural execution surface.
-- Procedure: make sequence, branch conditions, stop conditions, and expected artifacts explicit.
-- Progressive disclosure: move detailed protocols into references and repeated deterministic work into scripts.
-- Verification: add hard gates, process checks, and task-specific validation steps.
-- Robustness: add ambiguity, missing-input, noise, or retrieval-pressure cases to the benchmark before adding bulky instructions.
+For the default scaffold, run:
 
-Do not make a skill bigger just because it failed. Bloated skills often lose by increasing context load, ambiguity, and retrieval friction.
-
-## Workflow
-
-### 1. Inspect the Skill
-
-Read the target skill's `SKILL.md` completely. Read only directly relevant references, scripts, metadata, and recent user feedback needed to understand behavior.
-
-Record a concise diagnosis:
-
-- Triggering: whether the frontmatter description fires for the right tasks and avoids wrong tasks.
-- Workflow: whether the body gives enough sequence, decision rules, and stop conditions.
-- Progressive disclosure: whether details belong in `SKILL.md`, references, scripts, or assets.
-- Validation: whether the skill tells agents how to verify outputs and process compliance.
-- Evaluation readiness: whether real task prompts, hard gates, and scoring rules can measure improvement.
-- Failure modes: where a capable agent would likely drift, overfit, leak context, skip checks, misuse tools, or produce unmeasured claims.
-
-Do not edit yet unless the skill is broken in a way that prevents inspection.
-
-### 2. Create Isolated Copies
-
-Create two working copies:
-
-- `baseline`: exact original skill, read-only for the experiment.
-- `candidate`: editable copy for proposed changes.
-
-Keep paths explicit in notes. Do not let benchmark-running subagents see the diagnosis, expected answer, proposed fix, benchmark rubric, or old/new label.
-
-### 3. Design the Benchmark
-
-Define three representative benchmark tasks. Each task should be a realistic user request that would trigger the target skill and require the skill to add value beyond default agent behavior.
-
-For each task, specify:
-
-- Input artifact or prompt.
-- Allowed tools and constraints.
-- Expected output format.
-- Hard gates for unacceptable failures.
-- Process checks for required steps, tool use, verification, and source handling.
-- A 0-5 quality score plus any cost, latency, token, or maintainability notes.
-- Contamination checks.
-
-Use diagnostic examples to understand failures, but do not reuse them as final holdout tasks. If the candidate was tuned after seeing a holdout result, mark that holdout spent and create a fresh one for the final comparison.
-
-### 4. Revise the Candidate
-
-Make the smallest coherent set of changes that targets the diagnosis. Prefer:
-
-- Better trigger metadata over more body text when invocation is the problem.
-- Clear step order and decision rules over broad advice.
-- Reference files for detailed protocols that are needed only sometimes.
-- Scripts for repeated deterministic operations.
-- Explicit verification gates over vague quality language.
-- Reviewer, verifier, or trace-checking steps when tool calls or factual claims are consequential.
-
-Avoid adding examples that mirror hidden benchmark cases. Avoid bloating `SKILL.md` with generic reasoning advice Codex already knows.
-
-### 5. Run Paired Subagent Evaluation
-
-Run three paired comparisons, one pair per benchmark task:
-
-1. Launch one subagent with the baseline skill copy and the task prompt.
-2. Launch a separate subagent with the candidate skill copy and the same task prompt.
-3. Repeat for all three tasks.
-
-This produces six total task-solving subagent runs: `3 tasks x 2 variants`.
-
-Use neutral prompts such as:
-
-```text
-Use $target-skill at <skill-path> to complete this user request:
-<benchmark task>
+```bash
+python <this-skill>/scripts/init_procedural_memory.py <target-skill-path> --patch-skill
 ```
 
-Do not say the run is an evaluation. Do not reveal whether the skill is old or new. Do not tell the subagent what you changed or what you expect to improve.
+This creates:
 
-If the skill's value is uncertain, add a no-skill or default-agent control as a diagnostic baseline, but keep the required old-vs-new comparison unchanged.
+```text
+target-skill/
+  SKILL.md
+  references/
+    procedure-memory.md
+    procedure-graph.json
+  scripts/
+    record_episode.py
+```
 
-### 6. Score and Decide
+Then edit the generated `references/procedure-memory.md` so task-family names, examples, failure patterns, and training prompts match the target skill. Keep domain detail in the target skill's own references, not in this scaffolding skill.
 
-Score outputs using the pre-registered rubric before looking for explanations. Prefer blind labels such as `A` and `B` during scoring when practical.
+Use `references/` so the memory is discoverable through standard skill progressive disclosure. Use the generated `scripts/record_episode.py` for before-final automatic capture unless the target skill already has a better deterministic memory updater.
 
-Keep the candidate only if:
+## Capture Policy
 
-- It passes all hard gates.
-- It wins on at least two of three tasks, or wins one and ties two with a clear simplicity, reliability, cost, or latency advantage.
-- It does not create a serious regression in trigger accuracy, safety, factuality, process compliance, tool discipline, or maintainability.
+Default every scaffolded target skill to `auto` capture. The target skill should record a compact memory episode before the final answer whenever the run contains reusable procedural signal.
 
-If results are mixed, either make one more targeted iteration with a fresh final holdout or report the candidate as unproven. Do not claim improvement from cherry-picked examples.
+Use these modes only when the user or domain requires them:
 
-## Reporting
+- `auto`: record by default before final response unless the episode is low-signal, sensitive, or would contaminate a held-out evaluation.
+- `confirm`: draft the memory update and ask before writing when privacy, client data, job-search data, or user identity details are involved.
+- `manual`: record only when the user explicitly asks.
 
-End with:
+For `auto`, the target skill must include a final-response receipt:
 
-- Baseline path and candidate path or final installed path.
-- Diagnosis summary.
-- Benchmark task list, without leaking hidden answer keys if future reuse matters.
-- Six-run comparison table with task, variant label, hard-gate result, process result, score, cost/latency notes if available, and winner.
-- Decision: keep, revise again, or discard.
-- Residual risks such as small sample size, noisy judging, weak evaluator reliability, contamination risk, or benchmark coverage gaps.
+```text
+Procedural memory: recorded episode_YYYYMMDD_short_slug.
+```
 
-When installing a revised skill, validate the folder with the standard skill validator and mention whether validation passed.
+or:
+
+```text
+Procedural memory: skipped because <specific reason>.
+```
+
+The receipt makes capture failures visible. Do not silently skip.
+
+## Procedure Graph
+
+The generated `references/procedure-graph.json` starts with:
+
+```json
+{
+  "schema_version": 1,
+  "skill": "target-skill-name",
+  "capture_policy": {
+    "mode": "auto",
+    "before_final_required": true,
+    "receipt_required": true,
+    "sensitive_data": "summarize_or_skip"
+  },
+  "nodes": [],
+  "edges": [],
+  "episodes": [],
+  "failure_patterns": []
+}
+```
+
+Use stable ids such as `proc_audience_research` or `edge_research_to_draft`. Keep entries compact enough that Codex can inspect them directly.
+
+Model each graph element after ProPlay's practical roles:
+
+- Nodes: reusable procedural stages, not one-off actions.
+- Edges: observed transitions where one procedure tends to enable another.
+- Reliability: evidence-weighted confidence, not a universal truth claim.
+- Episodes: compact records of task, outcome, procedures used, and evidence pointer.
+- Failure patterns: context-sensitive traps to avoid during future preplay.
+
+## Procedure Memory Reference
+
+Create or update `references/procedure-memory.md` with these sections:
+
+- Purpose: explain that the file supports a Codex-native preplay-execute-capture-refine loop.
+- When to read: at the start of target-skill tasks that resemble prior episodes, after user corrections, and before subagent evaluations.
+- Capture policy: default `auto`, before-final required, final receipt required, summarize or skip sensitive details.
+- Graph schema: define nodes, edges, episodes, failure patterns, reliability, evidence, and capture policy.
+- Preplay instructions: retrieve relevant nodes and edges, form a short plan, and treat it as soft guidance.
+- Capture instructions: before final response, run `scripts/record_episode.py` or explicitly state a skip reason.
+- Refine instructions: update memory only from meaningful signal; keep facts grounded in observed task outcomes.
+- Training instructions for the user: show how to seed examples, run practice episodes, opt out of capture, approve sensitive updates, and request subagent checks.
+- Contamination rules: keep evaluation prompts and hidden expected answers out of training memory until they are spent.
+
+Do not store long transcripts in the procedure graph. Summarize them into reusable procedures and evidence pointers.
+
+## SKILL.md Integration
+
+Patch the target `SKILL.md` with a short section near the top-level workflow. Keep the exact wording domain-specific, but include this behavior:
+
+```markdown
+## Procedural Memory
+
+For tasks that resemble prior episodes, read `references/procedure-memory.md` and inspect `references/procedure-graph.json` before drafting the task plan.
+
+Use the procedure graph to preplay a likely path: select relevant procedure nodes, note reliable transitions, and identify failure patterns to avoid. Treat the preplay as soft guidance; user instructions and fresh task evidence override stale memory.
+
+Default to automatic capture. Before the final response, record a compact episode with `scripts/record_episode.py` when the run contains reusable procedural signal. Skip only when the episode is low-signal, sensitive beyond safe summarization, or part of a held-out evaluation that should remain uncontaminated.
+
+End with a procedural-memory receipt: `recorded <episode_id>` or `skipped because <reason>`.
+```
+
+If the target skill already has a workflow, insert the memory step before execution and the capture step after validation but before the final response. If the target skill is tiny, keep the section shorter but preserve the before-final capture gate and receipt.
+
+## Training Plan
+
+When finishing the scaffold, give the user concrete training instructions:
+
+1. Seed memory with 3-5 representative tasks, including at least one failure or correction if available.
+2. Run the target skill on one real task at a time.
+3. Let the target skill auto-record compact memory by default before each final response.
+4. For sensitive episodes, switch that episode to confirm mode and approve or edit the proposed memory record.
+5. After several updates, run fresh subagent evaluations on held-out prompts.
+
+Give the user copyable prompts such as:
+
+```text
+Use $target-skill on this task and auto-record a compact procedural-memory episode unless it is low-signal or sensitive.
+```
+
+```text
+Update $target-skill procedural memory from this correction. Store only reusable procedures, transition evidence, and failure patterns.
+```
+
+```text
+For this run, do not record procedural memory. Treat it as held-out evaluation.
+```
+
+```text
+Forward-test $target-skill with a fresh Codex subagent on this held-out task. Do not reveal expected answers or prior diagnosis.
+```
+
+## Subagent Evaluation
+
+When Codex subagent tools are available, use them for forward-testing after installing or updating the scaffold. If the tools are not already visible, search for multi-agent or subagent tools first.
+
+Use fresh subagents and neutral prompts:
+
+```text
+Use $target-skill at <absolute-target-skill-path> to complete this user request:
+<held-out task>
+```
+
+For before/after comparisons:
+
+- Keep a baseline copy of the target skill before memory changes when practical.
+- Run the same held-out task against baseline and scaffolded variants.
+- Disable auto-capture for held-out evaluation tasks unless the benchmark is spent.
+- Do not tell subagents which variant is expected to win.
+- Pass raw task artifacts, not your diagnosis or intended fix.
+- Score hard gates first, then quality, then process compliance.
+- Claim improvement only when the scaffolded version wins or ties with a clear reliability, cost, maintainability, or process advantage.
+
+If subagent tools are unavailable, provide the exact prompts the user can run later and say validation is pending.
+
+## Update Policy
+
+Keep procedural memory useful and clean:
+
+- Add a node only for a reusable stage, not a one-off action.
+- Add or strengthen an edge only when there is observed evidence that one procedure reliably enables another.
+- Record failures as avoidable patterns with context, not blame or vague warnings.
+- Auto-record compact episodes by default, but skip or ask confirmation for sensitive details, private user data, and clean held-out evaluations.
+- Prefer small updates after each episode over large retrospective rewrites.
+- Avoid storing private, sensitive, or irrelevant user data in memory.
+- Do not add benchmark holdout answers, evaluator rubrics, or hidden expected outputs to memory until the evaluation is no longer meant to be clean.
+
+## Validation
+
+After editing a target skill:
+
+- Validate YAML frontmatter and skill naming with the standard skill validator when available.
+- Check that `references/procedure-memory.md`, `references/procedure-graph.json`, and `scripts/record_episode.py` exist in the target skill.
+- Confirm `agents/openai.yaml`, if present, still matches the target skill's purpose.
+- Run a JSON parse check on `references/procedure-graph.json`.
+- Run `scripts/record_episode.py --help` or a harmless test against a temporary graph.
+- Report installed paths, memory files created, capture mode, training prompts, subagent evaluation status, and any validation result.
+
+If the user asked only for a scaffold design and not file edits, provide the proposed file tree, patches, and training plan without modifying files.
