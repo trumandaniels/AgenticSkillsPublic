@@ -10,18 +10,20 @@ This reference preserves the source trail for Agentic Skill Scaffolding. Read it
 
 ## What To Borrow
 
-ProPlay is useful here as an architectural pattern, not as a dependency. For Codex skills, borrow these ideas:
+ProPlay is useful here as an architectural pattern and as a source of local mechanics. For Codex skills, borrow these ideas and implement them with local scripts where practical:
 
 - Preplay before execution: use learned procedural memory to sketch a likely high-level path before starting the task.
 - Procedure graph: represent reusable task stages as nodes and useful transitions as edges.
-- Reliability records: treat transitions as context-sensitive evidence, not hard rules.
-- Episodic refinement: update memory after attempts using success, failure, correction, and validation signal.
+- Reliability records: treat transitions as context-sensitive evidence, not hard rules; maintain reward-weighted task embedding records locally.
+- Episodic refinement: update memory after attempts using success, failure, correction, validation signal, executed traces, and local reward proxies.
 - Failure retrieval: consult similar failure patterns before acting so the next run can avoid known traps.
 - Soft guidance: let the plan guide the agent while allowing user instructions and fresh observations to override it.
 
-## What Not To Port Directly
+## What To Port With Local Boundaries
 
-Do not copy the repo's benchmark runner into a Codex skill by default. The original implementation is built for programmatic LLM calls and benchmark environments. A Codex-native skill should avoid requiring API keys, long-running autonomous loops, or direct benchmark dependencies unless the user explicitly asks for that setup.
+Port the paper's procedural mechanics when they can run locally: trace-aware episode records, graph node and edge updates, reward/outcome-weighted transition reliability, task-specific reliability scoring with local embeddings, failure-suffix retrieval, and optional local environment adapters.
+
+Do not require paid API calls, OpenAI API keys, hosted benchmark services, or direct benchmark dependencies by default. The ProPlay repo's programmatic LLM runner can be treated as reference code, but a Codex-native scaffold should let the current Codex run or a fresh Codex subagent provide the reasoning step while deterministic local scripts maintain the memory state.
 
 Do not claim that a scaffolded skill has improved merely because memory files were added. Improvement requires held-out evaluation, ideally with fresh Codex subagents.
 
@@ -29,19 +31,22 @@ Do not claim that a scaffolded skill has improved merely because memory files we
 
 The ProPlay repository separates the benchmark-agnostic framework from benchmark-specific environments. Map those pieces into Codex skill scaffolding like this:
 
-- Graph logic -> `references/procedure-graph.json` and optional target-local helper scripts.
-- Environment interface -> the target skill's existing workflow and available tools.
-- LLM client -> the current Codex run or a fresh Codex subagent, not an API call from a script.
+- Graph logic -> `references/procedure-graph.json`, `scripts/retrieve_memory.py`, and `scripts/refine_graph.py`.
+- Environment interface -> the target skill's existing workflow, available tools, deterministic validators, tests, simulators, or optional local adapter scripts.
+- LLM client -> the current Codex run or a fresh Codex subagent, not a paid API call from a script.
 - Benchmark folders -> held-out user tasks or representative local artifacts.
-- Episode traces -> compact memory updates, not full transcripts.
+- Episode traces -> compact planned traces, executed traces, productive prefixes, failure suffixes, reward/outcome signals, and evidence pointers, not full transcripts.
 
 ## Codex-Native Adaptation
 
-A target skill should gain three local files or sections:
+A target skill should gain these local files or sections:
 
-1. A short `SKILL.md` Procedural Memory section that says when to read memory, how to preplay, and when to update.
-2. `references/procedure-memory.md`, a human-readable guide for the target skill's preplay-execute-refine loop.
-3. `references/procedure-graph.json`, a compact machine-readable memory store.
+1. A short `SKILL.md` Procedural Memory section that says when to read memory, how to preplay, when to capture, and when to refine.
+2. `references/procedure-memory.md`, a human-readable guide for the target skill's retrieve-preplay-execute-capture-refine loop.
+3. `references/procedure-graph.json`, a compact machine-readable memory store with nodes, edges, episodes, failure patterns, capture policy, retrieval policy, and optional environment interfaces.
+4. `scripts/retrieve_memory.py`, a local retrieval script using required sentence-transformer embeddings, RRF, and transition reliability.
+5. `scripts/record_episode.py`, a local capture script for compact trace/reward-aware episodes.
+6. `scripts/refine_graph.py`, a local graph-update script for nodes, edges, reward-weighted reliability, and failure patterns.
 
 Use `scripts/init_procedural_memory.py` from this skill to create the default files. Then adapt the generated memory reference to the domain.
 
